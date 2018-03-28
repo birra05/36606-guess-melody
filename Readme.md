@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алена Горюшина](https://up.htmlacademy.ru/ecmascript/4/user/36606).
-* Наставник: `Неизвестно`.
+* Наставник: `Николай Эмрих`.
 
 ---
 
