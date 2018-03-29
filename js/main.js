@@ -8,7 +8,7 @@ const KeyCode = {
 };
 
 const showTemplate = (index) => {
-  let mainContainer = appContainer.querySelector(`.main`);
+  const mainContainer = appContainer.querySelector(`.main`);
   appContainer.replaceChild(templates[index], mainContainer);
 };
 
