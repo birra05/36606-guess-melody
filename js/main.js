@@ -1,6 +1,8 @@
 const template = document.querySelector(`#templates`).content;
 const templates = Array.from(template.querySelectorAll(`.main`));
 const appContainer = document.querySelector(`.app`);
+let currentIndex = 0;
+let mainContainer;
 
 const KeyCode = {
   ARROW_LEFT: 37,
@@ -8,10 +10,10 @@ const KeyCode = {
 };
 
 const showTemplate = (index) => {
-  appContainer.replaceChild(templates[index], appContainer.children[0]);
+  mainContainer = appContainer.querySelector(`.main`);
+  appContainer.replaceChild(templates[index], mainContainer);
 };
 
-let currentIndex = 0;
 showTemplate(currentIndex);
 
 document.addEventListener(`keydown`, (event) => {
@@ -27,8 +29,6 @@ document.addEventListener(`keydown`, (event) => {
         if (currentIndex < templates.length - 1) {
           showTemplate(++currentIndex);
         }
-        break;
-      default:
         break;
     }
   }
