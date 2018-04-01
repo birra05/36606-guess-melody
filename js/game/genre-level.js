@@ -93,26 +93,15 @@ const answers = Array.from(form.elements.answer);
 const sendButton = form.querySelector(`.genre-answer-send`);
 sendButton.disabled = true;
 
-const Result = {
-  WIN: winResult,
-  FAIL: failResult,
-  ATTEMPTS: attemptsResult
+const results = [winResult, failResult, attemptsResult];
+
+const getRandomTemplate = () => {
+  const random = Math.floor(Math.random() * results.length);
+  return results[random];
 };
 
-const randomKey = () => {
-  const resultsKeys = Object.keys(Result);
-  const random = Math.floor(Math.random() * resultsKeys.length);
-  return Result[resultsKeys[random]];
-};
-
-form.addEventListener(`change`, (event) => {
-  const checkedElements = (element) => element.checked === true;
-  const isElementChecked = answers.some(checkedElements);
-  if (event.target.type === `checkbox` && isElementChecked) {
-    sendButton.disabled = false;
-  } else {
-    sendButton.disabled = true;
-  }
+form.addEventListener(`change`, () => {
+  sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
 });
 
 form.addEventListener(`submit`, () => {
@@ -121,7 +110,7 @@ form.addEventListener(`submit`, () => {
     element.checked = false;
   });
   sendButton.disabled = true;
-  showTemplate(randomKey());
+  showTemplate(getRandomTemplate());
 });
 
 export default page;
