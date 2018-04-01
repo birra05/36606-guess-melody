@@ -66,8 +66,8 @@ const page = getElementFromTemplate(template);
 const form = page.querySelector(`.main-list`);
 
 form.addEventListener(`change`, (event) => {
-  event.target.checked = false;
   showTemplate(genreLevel);
+  event.target.checked = false;
 });
 
 export default page;
