@@ -64,12 +64,9 @@ const template = `<section class="main main--level main--level-artist">
 
 const page = getElementFromTemplate(template);
 const form = page.querySelector(`.main-list`);
-const answers = Array.from(form.elements.answer);
 
-form.addEventListener(`change`, () => {
-  answers.forEach((element) => {
-    element.checked = false;
-  });
+form.addEventListener(`change`, (event) => {
+  event.target.checked = false;
   showTemplate(genreLevel);
 });
 
