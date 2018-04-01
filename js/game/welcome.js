@@ -1,10 +1,9 @@
 // Welcome
 import {getElementFromTemplate, showTemplate} from '../utils';
-import header from './header';
 import artistLevel from './artist-level';
 
 const template = `<section class="main main--welcome">
-    ${header}
+    <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
     <button class="main-play">Начать игру</button>
     <h2 class="title main-title">Правила игры</h2>
     <p class="text main-text">

@@ -63,12 +63,10 @@ const template = `<section class="main main--level main--level-artist">
   </section>`;
 
 const page = getElementFromTemplate(template);
-const answers = Array.from(page.querySelectorAll(`.main-answer`));
+const form = page.querySelector(`.main-list`);
 
-answers.forEach((element) => {
-  element.addEventListener(`click`, () => {
-    showTemplate(genreLevel);
-  });
+form.addEventListener(`change`, () => {
+  showTemplate(genreLevel);
 });
 
 export default page;

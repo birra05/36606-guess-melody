@@ -1,7 +1,7 @@
 export const getElementFromTemplate = (template) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(template, `text/html`);
-  return doc.body.firstElementChild;
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer.firstElementChild;
 };
 
 export const showTemplate = (template) => {

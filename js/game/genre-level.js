@@ -1,6 +1,8 @@
 // Genre level
 import {getElementFromTemplate, showTemplate} from '../utils';
-import result from './result';
+import winResult from './win-result';
+import failResult from './fail-result';
+import attemptsResult from './attempts-result';
 
 const template = `<section class="main main--level main--level-genre">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -86,32 +88,40 @@ const template = `<section class="main main--level main--level-genre">
   </section>`;
 
 const page = getElementFromTemplate(template);
-const form = page.querySelector(`.main-wrap .genre`);
-const answers = Array.from(form.querySelectorAll(`input[name='answer']`));
+const form = page.querySelector(`.genre`);
+const answers = Array.from(form.elements.answer);
 const sendButton = form.querySelector(`.genre-answer-send`);
 sendButton.disabled = true;
 
-const chooseAnswer = () => {
-  const checkedElements = [];
-  answers.forEach((element) => {
-    if (element.checked) {
-      checkedElements.push(element);
-    }
-  });
-  if (checkedElements.length > 0) {
+const Result = {
+  WIN: winResult,
+  FAIL: failResult,
+  ATTEMPTS: attemptsResult
+};
+
+const randomKey = () => {
+  const resultsKeys = Object.keys(Result);
+  const random = Math.floor(Math.random() * resultsKeys.length);
+  return Result[resultsKeys[random]];
+};
+
+form.addEventListener(`change`, (event) => {
+  const checkedElements = (element) => element.checked === true;
+  const isElementChecked = answers.some(checkedElements);
+  if (event.target.type === `checkbox` && isElementChecked) {
     sendButton.disabled = false;
   } else {
     sendButton.disabled = true;
   }
-};
-
-answers.forEach((element) => {
-  element.addEventListener(`change`, chooseAnswer);
 });
 
 form.addEventListener(`submit`, () => {
   event.preventDefault();
-  showTemplate(result);
+  answers.forEach((element) => {
+    element.checked = false;
+  });
+  sendButton.disabled = true;
+  showTemplate(randomKey());
 });
 
 export default page;
