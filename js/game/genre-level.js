@@ -96,8 +96,8 @@ sendButton.disabled = true;
 const results = [winResult, failResult, attemptsResult];
 
 const getRandomTemplate = () => {
-  const random = Math.floor(Math.random() * results.length);
-  return results[random];
+  const randomIndex = Math.floor(Math.random() * results.length);
+  return results[randomIndex];
 };
 
 form.addEventListener(`change`, () => {
