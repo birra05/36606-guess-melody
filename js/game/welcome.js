@@ -1,6 +1,7 @@
 // Welcome
 import {getElementFromTemplate, showTemplate} from '../utils';
 import artistLevel from './artist-level';
+import {showResult} from "../data/show-result";
 
 const template = `<section class="main main--welcome">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -15,6 +16,8 @@ const template = `<section class="main main--welcome">
 
 const page = getElementFromTemplate(template);
 const button = page.querySelector(`.main-play`);
+
+showResult();
 
 button.addEventListener(`click`, () => {
   showTemplate(artistLevel);
