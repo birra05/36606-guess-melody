@@ -1,6 +1,6 @@
 import {RULES} from '../utils';
 
-export const countPoints = (answers = [], lives) => {
+const countPoints = (answers = [], lives) => {
   let points = 0;
 
   if (answers.length < 10 || lives === 0) {
@@ -19,5 +19,7 @@ export const countPoints = (answers = [], lives) => {
   });
   return points;
 };
+
+export default countPoints;
 
 

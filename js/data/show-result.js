@@ -1,5 +1,5 @@
-export const showResult = (stats = [], result) => {
-  if (stats.length === 0 || !result) {
+const showResult = (stats = [], result) => {
+  if (stats.length < 1 || !result) {
     return -1;
   }
   if (result.lives === 0) {
@@ -14,7 +14,12 @@ export const showResult = (stats = [], result) => {
   playersStats.sort(compareResults);
   const playerPlace = playersStats.indexOf(result.points) + 1;
   const losersStats = playersStats.slice(playerPlace);
+  if (losersStats.length === 0) {
+    return -1;
+  }
   const successPercent = Math.floor((losersStats.length / playersStats.length) * 100);
 
   return `Вы заняли ${playerPlace} место из ${playersStats.length} игроков. Это лучше, чем у ${successPercent + `%`} игроков`;
 };
+
+export default showResult;

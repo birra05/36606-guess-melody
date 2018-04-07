@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {countPoints} from './count-points';
+import countPoints from './count-points';
 import {INITIAL_GAME} from '../utils';
 import {
   notEnoughAnswers, correctNotFastAnswers, someFailAnswers,

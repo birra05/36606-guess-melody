@@ -238,7 +238,8 @@ export const threeFailAnswers = [
 // Examples for the showResult function
 
 export const playersStats = [10, 12, 5, 3, 17];
-export const aLotOfPlayers = [19, 11, 2, 7, 13, 9, 4, 8, 6, 15, 12, 17];
+export const aLotOfPlayersStats = [19, 11, 2, 7, 13, 9, 4, 8, 6, 15, 12, 17];
+export const onePlayerStats = [18];
 
 export const playerResult = {
   points: 15,
