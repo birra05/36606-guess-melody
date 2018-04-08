@@ -1,20 +1,16 @@
 const setTimer = (time) => {
   if (!time || !Number.isInteger(time) || time <= 0) {
-    return `Переданы неверные данные`;
+    throw new Error(`Ожидается целое число больше нуля`);
   }
 
   return {
     time,
-    completed: false,
     tick() {
       this.time--;
       if (this.time <= 0) {
-        this.completed = true;
-        this.completedMessage();
+        return true;
       }
-    },
-    completedMessage() {
-      return `Время вышло`;
+      return false;
     }
   };
 };

@@ -15,10 +15,13 @@ describe(`Shows player's results and compares with other players`, () => {
   it(`should return 'У вас закончились все попытки. Ничего, повезёт в следующий раз!', if limit is exceed`, () => {
     assert.equal(showResult(playersStats, playerResultNoLives), `У вас закончились все попытки. Ничего, повезёт в следующий раз!`);
   });
-  it(`should return 'Переданы неверные данные', if no stats or no player's result`, () => {
-    assert.equal(showResult(), `Переданы неверные данные`);
-  });
   it(`should return 'Вы сыграли хуже всех', if player's result is worst`, () => {
     assert.equal(showResult(onePlayerStats, playerResult), `Вы сыграли хуже всех`);
+  });
+  it(`should not allow set empty array or empty player's result or incorrect data`, () => {
+    assert.throws(() => showResult(), `Ожидается массив данных других игроков и объект результата текущего игрока`);
+    assert.throws(() => showResult([], {}), `Ожидается массив данных других игроков и объект результата текущего игрока`);
+    assert.throws(() => showResult(1, 2), `Ожидается массив данных других игроков и объект результата текущего игрока`);
+    assert.throws(() => showResult({}, `10`), `Ожидается массив данных других игроков и объект результата текущего игрока`);
   });
 });

@@ -1,6 +1,6 @@
 const showResult = (stats = [], result) => {
-  if (stats.length < 1 || !result) {
-    return `Переданы неверные данные`;
+  if (stats.length < 1 || !result || !Array.isArray(stats) || typeof result !== `object`) {
+    throw new Error(`Ожидается массив данных других игроков и объект результата текущего игрока`);
   }
   if (result.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;

@@ -10,14 +10,10 @@ export const showTemplate = (template) => {
   appContainer.replaceChild(template, mainContainer);
 };
 
-export const INITIAL_GAME = {
-  level: 0,
-  lives: 3,
-  time: 300
+export const InitialGame = {
+  LEVEL: 0,
+  LIVES: 3,
+  TIME: 300
 };
 
-export const RULES = {
-  isCorrect: 1,
-  isFast: 1,
-  isFail: -2
-};
+

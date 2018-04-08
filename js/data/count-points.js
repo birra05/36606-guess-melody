@@ -1,25 +1,29 @@
-import {RULES} from '../utils';
-
 const countPoints = (answers = [], lives) => {
   let points = 0;
   const FAST_TIME = 30;
 
-  if (answers.length < 10) {
-    return `Переданы неверные данные`;
+  const Rules = {
+    IS_CORRECT: 1,
+    IS_FAST: 1,
+    IS_FAIL: -2
+  };
+
+  if (answers.length !== 10) {
+    throw new Error(`Массив ответов должен содержать 10 элементов`);
   }
 
-  if (lives === 0) {
-    return `Количество попыток закончилось`;
+  if (!lives || lives <= 0 || lives > 3 || !Number.isInteger(lives)) {
+    throw new Error(`Передано неверное количество жизней`);
   }
 
   answers.forEach((element) => {
     if (element.isCorrect) {
-      points += RULES.isCorrect;
+      points += Rules.IS_CORRECT;
       if (element.time < FAST_TIME) {
-        points += RULES.isFast;
+        points += Rules.IS_FAST;
       }
     } else {
-      points += RULES.isFail;
+      points += Rules.IS_FAIL;
     }
   });
   return points;

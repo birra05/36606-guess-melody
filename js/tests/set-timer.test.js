@@ -6,24 +6,21 @@ describe(`Set timer`, () => {
     const timer = setTimer(15);
     timer.tick();
     assert.equal(timer.time, 14);
-    assert.equal(timer.completed, false);
+    assert.equal(timer.tick(), false);
   });
-  it(`should return 'Время вышло', when timer is completed`, () => {
-    const timer = setTimer(1);
+  it(`should return true, when timer is completed`, () => {
+    const timer = setTimer(2);
     timer.tick();
-    assert.equal(timer.completedMessage(), `Время вышло`);
+    timer.tick();
+    assert.equal(timer.tick(), true);
   });
-  it(`should return 'Переданы неверные данные', if function has no parameters or time is over`, () => {
-    assert.equal(setTimer(), `Переданы неверные данные`);
-    assert.equal(setTimer(0), `Переданы неверные данные`);
-  });
-  it(`should return  'Переданы неверные данные', if time is not a number type`, () => {
-    assert.equal(setTimer(`5`), `Переданы неверные данные`);
-    assert.equal(setTimer(false), `Переданы неверные данные`);
-    assert.equal(setTimer([]), `Переданы неверные данные`);
-    assert.equal(setTimer({}), `Переданы неверные данные`);
-  });
-  it(`should return 'Переданы неверные данные', if time is not integer number`, () => {
-    assert.equal(setTimer(0.45), `Переданы неверные данные`);
+  it(`should not allow set time, if it is not integer number or data is incorrect`, () => {
+    assert.throws(() => setTimer(), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer(0), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer(0.45), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer(`5`), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer(false), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer([]), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer({}), `Ожидается целое число больше нуля`);
   });
 });
