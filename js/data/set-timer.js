@@ -1,6 +1,6 @@
 const setTimer = (time) => {
   if (!time || !Number.isInteger(time) || time <= 0) {
-    return -1;
+    return `Переданы неверные данные`;
   }
 
   return {
@@ -10,7 +10,11 @@ const setTimer = (time) => {
       this.time--;
       if (this.time <= 0) {
         this.completed = true;
+        this.completedMessage();
       }
+    },
+    completedMessage() {
+      return `Время вышло`;
     }
   };
 };

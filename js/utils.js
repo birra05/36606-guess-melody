@@ -19,6 +19,5 @@ export const INITIAL_GAME = {
 export const RULES = {
   isCorrect: 1,
   isFast: 1,
-  isFail: -2,
-  fastTime: 30
+  isFail: -2
 };

@@ -1,6 +1,6 @@
 const showResult = (stats = [], result) => {
   if (stats.length < 1 || !result) {
-    return -1;
+    return `Переданы неверные данные`;
   }
   if (result.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
@@ -15,11 +15,11 @@ const showResult = (stats = [], result) => {
   const playerPlace = playersStats.indexOf(result.points) + 1;
   const losersStats = playersStats.slice(playerPlace);
   if (losersStats.length === 0) {
-    return -1;
+    return `Вы сыграли хуже всех`;
   }
   const successPercent = Math.floor((losersStats.length / playersStats.length) * 100);
 
-  return `Вы заняли ${playerPlace} место из ${playersStats.length} игроков. Это лучше, чем у ${successPercent + `%`} игроков`;
+  return `Вы заняли ${playerPlace} место из ${playersStats.length} игроков. Это лучше, чем у ${successPercent}% игроков`;
 };
 
 export default showResult;

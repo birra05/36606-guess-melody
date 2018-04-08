@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import showResult from './show-result';
+import showResult from '../data/show-result';
 import {
   aLotOfPlayersStats, onePlayerStats, playerResult, playerResultNoLives, playerResultNoTime,
   playersStats
@@ -15,10 +15,10 @@ describe(`Shows player's results and compares with other players`, () => {
   it(`should return 'У вас закончились все попытки. Ничего, повезёт в следующий раз!', if limit is exceed`, () => {
     assert.equal(showResult(playersStats, playerResultNoLives), `У вас закончились все попытки. Ничего, повезёт в следующий раз!`);
   });
-  it(`should return -1, if no stats or no player's result`, () => {
-    assert.equal(showResult(), -1);
+  it(`should return 'Переданы неверные данные', if no stats or no player's result`, () => {
+    assert.equal(showResult(), `Переданы неверные данные`);
   });
-  it(`should return -1, if player's result is worst`, () => {
-    assert.equal(showResult(onePlayerStats, playerResult), -1);
+  it(`should return 'Вы сыграли хуже всех', if player's result is worst`, () => {
+    assert.equal(showResult(onePlayerStats, playerResult), `Вы сыграли хуже всех`);
   });
 });
