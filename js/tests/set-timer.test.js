@@ -11,16 +11,12 @@ describe(`Set timer`, () => {
   it(`should return true, when timer is completed`, () => {
     const timer = setTimer(2);
     timer.tick();
-    timer.tick();
     assert.equal(timer.tick(), true);
   });
   it(`should not allow set time, if it is not integer number or data is incorrect`, () => {
     assert.throws(() => setTimer(), `Ожидается целое число больше нуля`);
     assert.throws(() => setTimer(0), `Ожидается целое число больше нуля`);
     assert.throws(() => setTimer(0.45), `Ожидается целое число больше нуля`);
-    assert.throws(() => setTimer(`5`), `Ожидается целое число больше нуля`);
-    assert.throws(() => setTimer(false), `Ожидается целое число больше нуля`);
-    assert.throws(() => setTimer([]), `Ожидается целое число больше нуля`);
-    assert.throws(() => setTimer({}), `Ожидается целое число больше нуля`);
+    assert.throws(() => setTimer(-20), `Ожидается целое число больше нуля`);
   });
 });

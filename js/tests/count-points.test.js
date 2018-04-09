@@ -22,7 +22,7 @@ describe(`Count gamer's points`, () => {
   it(`should return 20, if all answers are correct and fast`, () => {
     assert.equal(countPoints(correctAndFastAnswers, InitialGame.LIVES), 20);
   });
-  it(`should return 4, if random answers`, () => {
+  it(`should return correct points, if answers are random and data is correct`, () => {
     assert.equal(countPoints(someFailAnswers, 1), 4);
   });
 });

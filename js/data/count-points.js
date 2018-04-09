@@ -1,7 +1,5 @@
 const countPoints = (answers = [], lives) => {
-  let points = 0;
   const FAST_TIME = 30;
-
   const Rules = {
     IS_CORRECT: 1,
     IS_FAST: 1,
@@ -12,10 +10,11 @@ const countPoints = (answers = [], lives) => {
     throw new Error(`Массив ответов должен содержать 10 элементов`);
   }
 
-  if (!lives || lives <= 0 || lives > 3 || !Number.isInteger(lives)) {
+  if (!Number.isInteger(lives) || lives <= 0 || lives > 3) {
     throw new Error(`Передано неверное количество жизней`);
   }
 
+  let points = 0;
   answers.forEach((element) => {
     if (element.isCorrect) {
       points += Rules.IS_CORRECT;

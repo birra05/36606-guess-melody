@@ -1,5 +1,5 @@
 const setTimer = (time) => {
-  if (!time || !Number.isInteger(time) || time <= 0) {
+  if (!Number.isInteger(time) || time <= 0) {
     throw new Error(`Ожидается целое число больше нуля`);
   }
 
@@ -7,7 +7,7 @@ const setTimer = (time) => {
     time,
     tick() {
       this.time--;
-      if (this.time <= 0) {
+      if (this.time === 0) {
         return true;
       }
       return false;
