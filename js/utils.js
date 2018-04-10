@@ -9,3 +9,11 @@ export const showTemplate = (template) => {
   const mainContainer = appContainer.querySelector(`.main`);
   appContainer.replaceChild(template, mainContainer);
 };
+
+export const InitialGame = {
+  LEVEL: 0,
+  LIVES: 3,
+  TIME: 300
+};
+
+
