@@ -1,10 +1,10 @@
 // Welcome
-import {getElementFromTemplate, randomElement, showTemplate, state} from '../utils';
+import {getElementFromTemplate, showTemplate} from '../utils';
 import header from './header';
 import artistLevel from './artist-level';
-import genreLevel from './genre-level';
 
-const template = `<section class="main main--welcome">
+export default (state) => {
+  const template = `<section class="main main--welcome">
     ${header}
     <button class="main-play">Начать игру</button>
     <h2 class="title main-title">Правила игры</h2>
@@ -15,15 +15,14 @@ const template = `<section class="main main--welcome">
     </p>
   </section>`;
 
-const page = getElementFromTemplate(template);
-const button = page.querySelector(`.main-play`);
+  const page = getElementFromTemplate(template);
+  const button = page.querySelector(`.main-play`);
 
-const levels = [artistLevel, genreLevel];
-const randomLevel = randomElement(levels);
+  button.addEventListener(`click`, () => {
+    state.level++;
+    showTemplate(artistLevel(state));
+  });
 
-button.addEventListener(`click`, () => {
-  state.level++;
-  showTemplate(randomLevel);
-});
+  return page;
+};
 
-export default page;

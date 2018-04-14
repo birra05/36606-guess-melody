@@ -1,6 +1,6 @@
-import {showTemplate} from './utils';
+import {showTemplate, state} from './utils';
 import welcome from './modules/welcome';
 
-showTemplate(welcome);
+showTemplate(welcome(state));
 
 

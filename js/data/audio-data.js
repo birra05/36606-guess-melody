@@ -19,7 +19,6 @@ export default [
     image: `http://4.bp.blogspot.com/-kft9qu5ET6U/VPFUBi9W-MI/AAAAAAAACYM/UxXilXKYwOc/s1600/audionautix%2BHalf%2BSize.jpg`,
     src: `https://www.youtube.com/audiolibrary_download?vid=a127d9b7de8a17cf`,
     genre: `Country`
-    // genre: `Jazz`
   },
   {
     artist: `Riot`,

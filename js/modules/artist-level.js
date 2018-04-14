@@ -1,20 +1,19 @@
 // Artist level
-import {compareRandom, getElementFromTemplate, randomElement, showTemplate, state} from '../utils';
+import {getElementFromTemplate, randomElement, showTemplate, showNextLevel, saveResult} from '../utils';
 import genreLevel from './genre-level';
 import timer from './timer';
 import lives from './lives';
-import audioData from '../data/audio-data';
+import {artistLevelQuestions} from '../data/questions-data';
+import resultTemplate from "./result-template";
 
-const audioArray = audioData.slice().sort(compareRandom).slice(0, 3);
-const randomSong = randomElement(audioArray).src;
-const rightAnswersArray = audioArray.filter((element) => element.src === randomSong);
-const rightAnswersValues = rightAnswersArray.map((element) => element.name);
-console.log(rightAnswersValues);
+export default (state) => {
+  const audioArray = randomElement(artistLevelQuestions.slice());
+  const rightAnswersValues = [audioArray.artist];
 
-const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>
+  const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src=${randomSong}></audio>
+          <audio src=${audioArray.song}></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -26,7 +25,7 @@ const artistTemplate = (data) => `<h2 class="title main-title">Кто испол
     const index = i + 1;
     return (
       `<div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-${index}" name="answer" value="${audio.name}"/>
+          <input class="main-answer-r" type="radio" id="answer-${index}" name="answer" value="${audio.artist}"/>
           <label class="main-answer" for="answer-${index}">
             <img class="main-answer-preview" src=${audio.image}
                  alt=${audio.artist} width="134" height="134">
@@ -37,23 +36,27 @@ const artistTemplate = (data) => `<h2 class="title main-title">Кто испол
   }).join(``)}
       </form>`;
 
-const template = `<section class="main main--level main--level-artist">
+  const template = `<section class="main main--level main--level-artist">
     ${timer(state)}
     ${lives(state)}
 
     <div class="main-wrap">
-      ${artistTemplate(audioArray)}
+      ${artistTemplate(audioArray.questions)}
     </div>
   </section>`;
 
-const page = getElementFromTemplate(template);
-const form = page.querySelector(`.main-list`);
-const userAnswers = [];
+  const page = getElementFromTemplate(template);
+  const form = page.querySelector(`.main-list`);
+  const userAnswers = [];
 
-form.addEventListener(`change`, (event) => {
-  userAnswers.push(event.target.value);
-  event.target.checked = false;
-  showTemplate(genreLevel);
-});
+  form.addEventListener(`change`, (event) => {
+    userAnswers.push(event.target.value);
+    saveResult(userAnswers, rightAnswersValues);
+    event.target.checked = false;
+    showNextLevel();
+  });
 
-export default page;
+  return page;
+};
+
+
