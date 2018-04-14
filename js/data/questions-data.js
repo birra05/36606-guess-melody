@@ -25,7 +25,7 @@ export const artistLevelQuestions = [
     rightAnswer: audioData[5].artist,
     song: audioData[5].src,
     questions: [audioData[4], audioData[5], audioData[6]]
-  },
+  }
 ];
 
 export const genreLevelQuestions = [
@@ -53,5 +53,5 @@ export const genreLevelQuestions = [
     rightAnswer: audioData[5].name,
     genre: audioData[5].genre,
     questions: [audioData[4], audioData[5], audioData[6], audioData[0]]
-  },
+  }
 ];

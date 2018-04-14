@@ -1,14 +1,16 @@
 // Genre level
 import {
-  showTemplate, getElementFromTemplate, saveResult, randomElement, showNextLevel} from '../utils';
-import artistLevel from './artist-level';
+  getElementFromTemplate, saveResult, randomElement, showNextLevel} from '../utils';
 import lives from './lives';
 import timer from './timer';
-import resultTemplate from './result-template';
 import {genreLevelQuestions} from "../data/questions-data";
 
 export default (state) => {
-  const audioArray = randomElement(genreLevelQuestions.slice());
+  let audioArray;
+  if (state.level < genreLevelQuestions.length) {
+    audioArray = genreLevelQuestions[state.level - 1];
+  }
+  audioArray = randomElement(genreLevelQuestions);
   const rightAnswersValues = [audioArray.rightAnswer];
 
   const genreTemplate = (data) => `<h2 class="title">Выберите ${audioArray.genre} треки</h2>

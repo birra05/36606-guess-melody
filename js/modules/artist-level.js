@@ -1,13 +1,15 @@
 // Artist level
-import {getElementFromTemplate, randomElement, showTemplate, showNextLevel, saveResult} from '../utils';
-import genreLevel from './genre-level';
+import {getElementFromTemplate, randomElement, showNextLevel, saveResult} from '../utils';
 import timer from './timer';
 import lives from './lives';
 import {artistLevelQuestions} from '../data/questions-data';
-import resultTemplate from "./result-template";
 
 export default (state) => {
-  const audioArray = randomElement(artistLevelQuestions.slice());
+  let audioArray;
+  if (state.level < artistLevelQuestions.length) {
+    audioArray = artistLevelQuestions[state.level - 1];
+  }
+  audioArray = randomElement(artistLevelQuestions);
   const rightAnswersValues = [audioArray.artist];
 
   const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>

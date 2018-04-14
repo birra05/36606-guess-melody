@@ -42,6 +42,7 @@ export default (state) => {
       // console.log('playerResult', state.playerResult, 'global stats', playersStats);
       results.win.comparison = showResult(playersStats, state.playerResult);
       resultType = results.win;
+      break;
   }
 
   const template = (result) => {
