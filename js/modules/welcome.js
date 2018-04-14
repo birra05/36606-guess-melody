@@ -1,7 +1,8 @@
 // Welcome
-import {getElementFromTemplate, showTemplate} from '../utils';
-import artistLevel from './artist-level';
+import {getElementFromTemplate, randomElement, showTemplate, state} from '../utils';
 import header from './header';
+import artistLevel from './artist-level';
+import genreLevel from './genre-level';
 
 const template = `<section class="main main--welcome">
     ${header}
@@ -17,8 +18,12 @@ const template = `<section class="main main--welcome">
 const page = getElementFromTemplate(template);
 const button = page.querySelector(`.main-play`);
 
+const levels = [artistLevel, genreLevel];
+const randomLevel = randomElement(levels);
+
 button.addEventListener(`click`, () => {
-  showTemplate(artistLevel);
+  state.level++;
+  showTemplate(randomLevel);
 });
 
 export default page;

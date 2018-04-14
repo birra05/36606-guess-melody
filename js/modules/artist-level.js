@@ -1,20 +1,20 @@
 // Artist level
-import {getElementFromTemplate, showTemplate} from '../utils';
+import {compareRandom, getElementFromTemplate, randomElement, showTemplate, state} from '../utils';
 import genreLevel from './genre-level';
 import timer from './timer';
+import lives from './lives';
+import audioData from '../data/audio-data';
 
-const template = `<section class="main main--level main--level-artist">
-    ${timer}
-    <div class="main-mistakes">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    </div>
+const audioArray = audioData.slice().sort(compareRandom).slice(0, 3);
+const randomSong = randomElement(audioArray).src;
+const rightAnswersArray = audioArray.filter((element) => element.src === randomSong);
+const rightAnswersValues = rightAnswersArray.map((element) => element.name);
+console.log(rightAnswersValues);
 
-    <div class="main-wrap">
-      <h2 class="title main-title">Кто исполняет эту песню?</h2>
+const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio></audio>
+          <audio src=${randomSong}></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -22,40 +22,36 @@ const template = `<section class="main main--level main--level-artist">
         </div>
       </div>
       <form class="main-list">
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1"/>
-          <label class="main-answer" for="answer-1">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                 alt="Пелагея" width="134" height="134">
-            Пелагея
+       ${data.map((audio, i) => {
+    const index = i + 1;
+    return (
+      `<div class="main-answer-wrapper">
+          <input class="main-answer-r" type="radio" id="answer-${index}" name="answer" value="${audio.name}"/>
+          <label class="main-answer" for="answer-${index}">
+            <img class="main-answer-preview" src=${audio.image}
+                 alt=${audio.artist} width="134" height="134">
+            ${audio.artist}
           </label>
-        </div>
+        </div>`
+    );
+  }).join(``)}
+      </form>`;
 
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-2"/>
-          <label class="main-answer" for="answer-2">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                 alt="Краснознаменная дивизия имени моей бабушки" width="134" height="134">
-            Краснознаменная дивизия имени моей бабушки
-          </label>
-        </div>
+const template = `<section class="main main--level main--level-artist">
+    ${timer(state)}
+    ${lives(state)}
 
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-3" name="answer" value="val-3"/>
-          <label class="main-answer" for="answer-3">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                 alt="Lorde" width="134" height="134">
-            Lorde
-          </label>
-        </div>
-      </form>
+    <div class="main-wrap">
+      ${artistTemplate(audioArray)}
     </div>
   </section>`;
 
 const page = getElementFromTemplate(template);
 const form = page.querySelector(`.main-list`);
+const userAnswers = [];
 
 form.addEventListener(`change`, (event) => {
+  userAnswers.push(event.target.value);
   event.target.checked = false;
   showTemplate(genreLevel);
 });
