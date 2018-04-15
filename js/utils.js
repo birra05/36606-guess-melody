@@ -1,13 +1,11 @@
 import artistLevel from './modules/artist-level';
 import genreLevel from './modules/genre-level';
 import resultTemplate from './modules/result-template';
+import questions from './data/questions-data';
 
-export const initialState = {
-  level: 0,
-  lives: 3,
-  time: 300,
-  answers: [],
-  playerResult: {}
+export const InitialState = {
+  LIVES: 3,
+  TIME: 300
 };
 
 export const playersStats = [];
@@ -24,26 +22,14 @@ export const showTemplate = (template) => {
   appContainer.replaceChild(template, mainContainer);
 };
 
-export const compareArrays = (array1, array2) => {
-  return array1.every((element) => array2.includes(element));
+export const compareArrays = (arr1, arr2) => {
+  if (arr1.length === arr2.length) {
+    return arr1.every((element) => arr2.includes(element));
+  }
+  return false;
 };
 
-export const compareRandom = () => {
-  return Math.random() - 0.5;
-};
-
-export const randomIndex = (array) => {
-  return Math.floor(Math.random() * array.length);
-};
-
-export const randomElement = (array) => {
-  const random = randomIndex(array);
-  return array[random];
-};
-
-export const state = Object.assign({}, initialState);
-
-export const saveResult = (userAnswers, rightAnswers) => {
+export const saveResult = (state, userAnswers, rightAnswers) => {
   const rightAnswer = compareArrays(userAnswers, rightAnswers);
 
   if (rightAnswer) {
@@ -62,33 +48,89 @@ export const saveResult = (userAnswers, rightAnswers) => {
   state.time -= state.answers[state.answers.length - 1].time;
 };
 
-const timeValue = (time) => {
-  return new Date(time * 1000).toUTCString().split(/ /)[4].slice(3);
-};
+export const showNextLevel = (state) => {
+  let nextLevel;
+  let questionsArray;
+  if (state.level < 5) {
+    nextLevel = artistLevel;
+    questionsArray = questions.artistQuestions[state.level - 1];
+  } else {
+    nextLevel = genreLevel;
+    questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length - 1];
+  }
 
-export const getMinutes = (time) => {
-  return timeValue(time).substring(0, 2);
-};
-
-export const getSeconds = (time) => {
-  return timeValue(time).substring(3);
-};
-
-export const getPlayerResult = (playerPoints, playerLives, playerTime) => {
-  return {
-    points: playerPoints,
-    lives: playerLives,
-    time: playerTime
-  };
-};
-
-export const showNextLevel = () => {
-  const randomLevel = randomElement([artistLevel, genreLevel]);
   if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {
-    showTemplate(randomLevel(state));
+    showTemplate(nextLevel(state, questionsArray));
   } else {
     showTemplate(resultTemplate(state));
   }
+};
+
+export const countPoints = (answers = [], lives) => {
+  const FAST_TIME = 30;
+  const Rules = {
+    IS_CORRECT: 1,
+    IS_FAST: 1,
+    IS_FAIL: -2
+  };
+
+  if (answers.length !== 10) {
+    throw new Error(`Массив ответов должен содержать 10 элементов`);
+  }
+
+  if (!Number.isInteger(lives) || lives <= 0 || lives > 3) {
+    throw new Error(`Передано неверное количество жизней`);
+  }
+
+  let points = 0;
+  answers.forEach((element) => {
+    if (element.isCorrect) {
+      points += Rules.IS_CORRECT;
+      if (element.time < FAST_TIME) {
+        points += Rules.IS_FAST;
+      }
+    } else {
+      points += Rules.IS_FAIL;
+    }
+  });
+  return points;
+};
+
+export const showResult = (stats = [], result) => {
+  // if (stats.length < 1 || typeof result !== `object`) {
+  //   throw new Error(`Ожидается массив данных других игроков и объект результата текущего игрока`);
+  // }
+  if (result.lives === 0) {
+    return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+  }
+  if (result.time === 0) {
+    return `Время вышло! Вы не успели отгадать все мелодии`;
+  }
+  const otherPlayersStats = stats.slice();
+  otherPlayersStats.push(result.points);
+  const compareResults = (a, b) => b - a;
+  otherPlayersStats.sort(compareResults);
+  const playerPlace = otherPlayersStats.indexOf(result.points) + 1;
+  const successPercent = Math.floor(((otherPlayersStats.length - playerPlace) / otherPlayersStats.length) * 100);
+
+  return `Вы заняли ${playerPlace} место из ${otherPlayersStats.length} игроков. Это лучше, чем у ${successPercent}% игроков`;
+};
+
+export const setTimer = (time) => {
+  if (!Number.isInteger(time) || time <= 0) {
+    throw new Error(`Ожидается целое число больше нуля`);
+  }
+
+  return {
+    time,
+    tick() {
+      this.time--;
+      if (this.time === 0) {
+        return true;
+      }
+      return false;
+    }
+  };
 };
 
 

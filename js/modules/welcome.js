@@ -1,9 +1,17 @@
 // Welcome
-import {getElementFromTemplate, showTemplate} from '../utils';
+import {getElementFromTemplate, showTemplate, InitialState} from '../utils';
 import header from './header';
 import artistLevel from './artist-level';
+import questions from '../data/questions-data';
 
-export default (state) => {
+export default () => {
+  const state = {
+    level: 0,
+    lives: InitialState.LIVES,
+    time: InitialState.TIME,
+    answers: []
+  };
+
   const template = `<section class="main main--welcome">
     ${header}
     <button class="main-play">Начать игру</button>
@@ -20,7 +28,7 @@ export default (state) => {
 
   button.addEventListener(`click`, () => {
     state.level++;
-    showTemplate(artistLevel(state));
+    showTemplate(artistLevel(state, questions.artistQuestions[0]));
   });
 
   return page;

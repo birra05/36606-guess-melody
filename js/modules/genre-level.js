@@ -1,18 +1,10 @@
 // Genre level
 import {
-  getElementFromTemplate, saveResult, randomElement, showNextLevel} from '../utils';
+  getElementFromTemplate, saveResult, showNextLevel} from '../utils';
 import lives from './lives';
 import timer from './timer';
-import {genreLevelQuestions} from "../data/questions-data";
 
-export default (state) => {
-  let audioArray;
-  if (state.level < genreLevelQuestions.length) {
-    audioArray = genreLevelQuestions[state.level - 1];
-  }
-  audioArray = randomElement(genreLevelQuestions);
-  const rightAnswersValues = [audioArray.rightAnswer];
-
+export default (state, audioArray) => {
   const genreTemplate = (data) => `<h2 class="title">Выберите ${audioArray.genre} треки</h2>
       <form class="genre">
         ${data.map((audio, i) => {
@@ -60,12 +52,12 @@ export default (state) => {
 
   form.addEventListener(`submit`, () => {
     event.preventDefault();
-    saveResult(userAnswers, rightAnswersValues);
+    saveResult(state, userAnswers, [audioArray.rightAnswer]);
     answers.forEach((element) => {
       element.checked = false;
     });
     sendButton.disabled = true;
-    showNextLevel();
+    showNextLevel(state);
   });
 
   return page;
