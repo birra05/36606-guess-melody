@@ -51,12 +51,12 @@ export const saveResult = (state, userAnswers, rightAnswers) => {
 export const showNextLevel = (state) => {
   let nextLevel;
   let questionsArray;
-  if (state.level < 5) {
+  if (state.level <= 5) {
     nextLevel = artistLevel;
     questionsArray = questions.artistQuestions[state.level - 1];
   } else {
     nextLevel = genreLevel;
-    questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length - 1];
+    questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
   }
 
   if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {
