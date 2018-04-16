@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import setTimer from '../data/set-timer';
+import {setTimer} from '../utils';
 
 describe(`Set timer`, () => {
   it(`should return false, when reduce time by one second and time is not over yet`, () => {

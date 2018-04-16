@@ -1,6 +1,6 @@
 import {showTemplate} from './utils';
-import welcome from './game/welcome';
+import welcome from './modules/welcome';
 
-showTemplate(welcome);
+showTemplate(welcome());
 
 
