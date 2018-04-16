@@ -1,10 +1,12 @@
 // Welcome
 import {getElementFromTemplate, showTemplate, InitialState} from '../utils';
-import header from './header';
+// import header from './header';
 import artistLevel from './artist-level';
 import questions from '../data/questions-data';
+import HeaderView from "../components/header-view";
 
 export default () => {
+  const header = new HeaderView();
   const state = {
     level: 0,
     lives: InitialState.LIVES,
@@ -13,7 +15,7 @@ export default () => {
   };
 
   const template = `<section class="main main--welcome">
-    ${header}
+    ${header.template}
     <button class="main-play">Начать игру</button>
     <h2 class="title main-title">Правила игры</h2>
     <p class="text main-text">

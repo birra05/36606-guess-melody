@@ -1,8 +1,16 @@
-export default (state) => {
-  const ONE_MINUTE = 60;
-  const minutes = String(Math.floor(state.time / ONE_MINUTE));
-  const seconds = String(state.time % ONE_MINUTE);
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+import AbstractView from '../abstract-view';
+
+export default class TimerView extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
+
+  get template() {
+    const ONE_MINUTE = 60;
+    const minutes = String(Math.floor(this.state.time / ONE_MINUTE));
+    const seconds = String(this.state.time % ONE_MINUTE);
+    return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle
         cx="390" cy="390" r="370"
         class="timer-line"
@@ -14,4 +22,5 @@ export default (state) => {
         --><span class="timer-value-secs">${seconds.length === 1 ? `0` + seconds : seconds}</span>
       </div>
     </svg>`;
-};
+  }
+}

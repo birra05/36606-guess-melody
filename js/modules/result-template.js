@@ -1,7 +1,8 @@
 import {
   getElementFromTemplate, showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
 import welcome from './welcome';
-import header from './header';
+import HeaderView from '../components/header-view';
+// import header from './header';
 
 const getResult = (state) => {
   let result;
@@ -41,9 +42,10 @@ const getResult = (state) => {
 };
 
 export default (state) => {
+  const header = new HeaderView();
   const result = getResult(state);
   const template = `<section class="main main--result">
-    ${header}
+    ${header.template}
     <h2 class="title">${result.title}</h2>
     <div class="main-stat">${result.stat}</div> 
     ${result.comparison ? `<span class="main-comparison">${result.comparison}</span>` : ``}

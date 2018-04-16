@@ -1,9 +1,13 @@
 // Artist level
 import {getElementFromTemplate, showNextLevel, saveResult} from '../utils';
-import timer from './timer';
-import lives from './lives';
+// import timer from './timer';
+// import lives from './lives';
+import TimerView from '../components/timer-view';
+import LivesView from "../components/lives-view";
 
 export default (state, audioArray) => {
+  const timer = new TimerView(state);
+  const lives = new LivesView(state);
   const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
@@ -31,8 +35,8 @@ export default (state, audioArray) => {
       </form>`;
 
   const template = `<section class="main main--level main--level-artist">
-    ${timer(state)}
-    ${lives(state)}
+    ${timer.template}
+    ${lives.template}
 
     <div class="main-wrap">
       ${artistTemplate(audioArray.questions)}
