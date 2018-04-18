@@ -1,10 +1,8 @@
 // Artist level
 import {getElementFromTemplate, showNextLevel, saveResult} from '../utils';
-// import timer from './timer';
-// import lives from './lives';
 import TimerView from '../components/timer-view';
-import LivesView from "../components/lives-view";
-import PlayerView from "../components/player-view";
+import LivesView from '../components/lives-view';
+import PlayerView from '../components/player-view';
 
 export default (state, audioArray) => {
   const timer = new TimerView(state);

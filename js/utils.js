@@ -1,5 +1,5 @@
 import artistLevel from './modules/artist-level';
-import genreLevel from './modules/genre-level';
+import genreLevel from './modules/genre-level-screen';
 import resultTemplate from './modules/result-template';
 import questions from './data/questions-data';
 
@@ -51,13 +51,13 @@ export const saveResult = (state, userAnswers, rightAnswers) => {
 export const showNextLevel = (state) => {
   let nextLevel;
   let questionsArray;
-  if (state.level <= 5) {
+  if (state.level <= 1) {
     nextLevel = artistLevel;
     questionsArray = questions.artistQuestions[state.level - 1];
   } else {
     nextLevel = genreLevel;
-    questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
-    // questionsArray = questions.genreQuestions[2];
+    // questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
+    questionsArray = questions.genreQuestions[2];
   }
 
   if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {
