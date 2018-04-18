@@ -4,7 +4,8 @@ import {
 // import lives from './lives';
 // import timer from './timer';
 import TimerView from '../components/timer-view';
-import LivesView from "../components/lives-view";
+import LivesView from '../components/lives-view';
+import PlayerView from '../components/player-view';
 
 export default (state, audioArray) => {
   const timer = new TimerView(state);
@@ -13,17 +14,10 @@ export default (state, audioArray) => {
       <form class="genre">
         ${data.map((audio, i) => {
     const index = i + 1;
+    const player = new PlayerView(audio.src);
     return (
       `<div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio src=${audio.src}></audio>
-              <button class="player-control player-control--pause" type="button"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
+          ${player.template}
           <input type="checkbox" name="answer" value="${audio.name}" id="a-${index}">
           <label class="genre-answer-check" for="a-${index}"></label>
         </div>`

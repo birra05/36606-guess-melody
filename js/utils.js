@@ -57,6 +57,7 @@ export const showNextLevel = (state) => {
   } else {
     nextLevel = genreLevel;
     questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
+    // questionsArray = questions.genreQuestions[2];
   }
 
   if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {

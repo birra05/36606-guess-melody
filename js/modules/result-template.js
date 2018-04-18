@@ -1,8 +1,7 @@
 import {
   getElementFromTemplate, showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
-import welcome from './welcome';
+import welcome from './welcome-screen';
 import HeaderView from '../components/header-view';
-// import header from './header';
 
 const getResult = (state) => {
   let result;

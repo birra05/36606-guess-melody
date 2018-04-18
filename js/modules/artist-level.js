@@ -4,20 +4,15 @@ import {getElementFromTemplate, showNextLevel, saveResult} from '../utils';
 // import lives from './lives';
 import TimerView from '../components/timer-view';
 import LivesView from "../components/lives-view";
+import PlayerView from "../components/player-view";
 
 export default (state, audioArray) => {
   const timer = new TimerView(state);
   const lives = new LivesView(state);
+  const player = new PlayerView(audioArray.song);
+
   const artistTemplate = (data) => `<h2 class="title main-title">Кто исполняет эту песню?</h2>
-      <div class="player-wrapper">
-        <div class="player">
-          <audio src=${audioArray.song}></audio>
-          <button class="player-control player-control--pause"></button>
-          <div class="player-track">
-            <span class="player-status"></span>
-          </div>
-        </div>
-      </div>
+      ${player.template}
       <form class="main-list">
        ${data.map((audio, i) => {
     const index = i + 1;
