@@ -1,6 +1,6 @@
 // Welcome
 import {showTemplate, InitialState} from '../utils';
-import artistLevel from './artist-level';
+import artistLevel from './artist-level-screen';
 import questions from '../data/questions-data';
 import WelcomeView from './welcome-view';
 

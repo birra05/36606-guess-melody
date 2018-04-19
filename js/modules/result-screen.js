@@ -1,7 +1,6 @@
-import {
-  getElementFromTemplate, showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
+import {showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
 import welcome from './welcome-screen';
-import HeaderView from '../components/header-view';
+import ResultView from './result-view';
 
 const getResult = (state) => {
   let result;
@@ -41,24 +40,14 @@ const getResult = (state) => {
 };
 
 export default (state) => {
-  const header = new HeaderView();
   const result = getResult(state);
-  const template = `<section class="main main--result">
-    ${header.template}
-    <h2 class="title">${result.title}</h2>
-    <div class="main-stat">${result.stat}</div> 
-    ${result.comparison ? `<span class="main-comparison">${result.comparison}</span>` : ``}
-    <span role="button" tabindex="0" class="main-replay">${result.button}</span>
-  </section>`;
+  const resultPage = new ResultView(result);
 
-  const page = getElementFromTemplate(template);
-  const replayButton = page.querySelector(`.main-replay`);
-
-  replayButton.addEventListener(`click`, () => {
+  resultPage.replay = () => {
     showTemplate(welcome());
-  });
+  };
 
-  return page;
+  return resultPage.element;
 };
 
 

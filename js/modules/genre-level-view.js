@@ -45,6 +45,7 @@ export default class GenreLevelView extends AbstractView {
 
   bind() {
     const form = this.element.querySelector(`.genre`);
+
     form.addEventListener(`change`, (event) => {
       this.getAnswers(event);
     });

@@ -1,6 +1,6 @@
-import artistLevel from './modules/artist-level';
+import artistLevel from './modules/artist-level-screen';
 import genreLevel from './modules/genre-level-screen';
-import resultTemplate from './modules/result-template';
+import resultTemplate from './modules/result-screen';
 import questions from './data/questions-data';
 
 export const InitialState = {
@@ -51,13 +51,12 @@ export const saveResult = (state, userAnswers, rightAnswers) => {
 export const showNextLevel = (state) => {
   let nextLevel;
   let questionsArray;
-  if (state.level <= 1) {
+  if (state.level <= 5) {
     nextLevel = artistLevel;
     questionsArray = questions.artistQuestions[state.level - 1];
   } else {
     nextLevel = genreLevel;
-    // questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
-    questionsArray = questions.genreQuestions[2];
+    questionsArray = questions.genreQuestions[state.level - questions.genreQuestions.length];
   }
 
   if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {
@@ -98,9 +97,6 @@ export const countPoints = (answers = [], lives) => {
 };
 
 export const showResult = (stats = [], result) => {
-  // if (stats.length < 1 || typeof result !== `object`) {
-  //   throw new Error(`Ожидается массив данных других игроков и объект результата текущего игрока`);
-  // }
   if (result.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
