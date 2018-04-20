@@ -1,16 +1,16 @@
 import AbstractView from '../abstract-view';
 
 export default class PlayerView extends AbstractView {
-  constructor(audio) {
+  constructor(audioSrc) {
     super();
-    this.audio = audio;
+    this.audioSrc = audioSrc;
   }
 
   get template() {
     return (
       `<div class="player-wrapper">
         <div class="player">
-          <audio src=${this.audio}></audio>
+          <audio src=${this.audioSrc}></audio>
           <button class="player-control player-control--pause" type="button"></button>
           <div class="player-track">
             <span class="player-status"></span>

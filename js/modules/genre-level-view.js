@@ -4,25 +4,24 @@ import LivesView from '../components/lives-view';
 import PlayerView from '../components/player-view';
 
 export default class GenreLevelView extends AbstractView {
-  constructor(state, audioArray) {
+  constructor(state, audioFiles) {
     super();
     this.state = state;
-    this.audioArray = audioArray;
+    this.audioFiles = audioFiles;
+    this.timer = new TimerView(this.state);
+    this.lives = new LivesView(this.state);
   }
 
   get template() {
-    const timer = new TimerView(this.state);
-    const lives = new LivesView(this.state);
-
     return (
       `<section class="main main--level main--level-genre">
-        ${timer.template}
-        ${lives.template}
+        ${this.timer.template}
+        ${this.lives.template}
     
         <div class="main-wrap">
-          <h2 class="title">Выберите ${this.audioArray.genre} треки</h2>
+          <h2 class="title">Выберите ${this.audioFiles.genre} треки</h2>
           <form class="genre">
-            ${this.audioArray.questions.map((audio, i) => {
+            ${this.audioFiles.questions.map((audio, i) => {
         const index = i + 1;
         const player = new PlayerView(audio.src);
         return (
@@ -45,12 +44,21 @@ export default class GenreLevelView extends AbstractView {
 
   bind() {
     const form = this.element.querySelector(`.genre`);
+    const answers = Array.from(form.elements.answer);
+    const sendButton = form.querySelector(`.genre-answer-send`);
+    sendButton.disabled = true;
 
     form.addEventListener(`change`, (event) => {
+      sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
       this.getAnswers(event);
     });
 
-    form.addEventListener(`submit`, () => {
+    form.addEventListener(`submit`, (event) => {
+      event.preventDefault();
+      answers.forEach((element) => {
+        element.checked = false;
+      });
+      sendButton.disabled = true;
       this.showLevel();
     });
   }

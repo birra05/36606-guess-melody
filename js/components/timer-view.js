@@ -4,12 +4,12 @@ export default class TimerView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
+    this.ONE_MINUTE = 60;
+    this.minutes = String(Math.floor(this.state.time / this.ONE_MINUTE));
+    this.seconds = String(this.state.time % this.ONE_MINUTE);
   }
 
   get template() {
-    const ONE_MINUTE = 60;
-    const minutes = String(Math.floor(this.state.time / ONE_MINUTE));
-    const seconds = String(this.state.time % ONE_MINUTE);
     return (
       `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
         <circle
@@ -18,9 +18,9 @@ export default class TimerView extends AbstractView {
           style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center">  
         </circle>
         <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-          <span class="timer-value-mins">${minutes.length === 1 ? `0` + minutes : minutes}</span><!--
+          <span class="timer-value-mins">${this.minutes.length === 1 ? `0` + this.minutes : this.minutes}</span><!--
           --><span class="timer-value-dots">:</span><!--
-          --><span class="timer-value-secs">${seconds.length === 1 ? `0` + seconds : seconds}</span>
+          --><span class="timer-value-secs">${this.seconds.length === 1 ? `0` + this.seconds : this.seconds}</span>
         </div>
       </svg>`
     );

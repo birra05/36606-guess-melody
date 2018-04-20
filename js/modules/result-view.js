@@ -5,12 +5,12 @@ export default class ResultView extends AbstractView {
   constructor(result) {
     super();
     this.result = result;
+    this.header = new HeaderView();
   }
   get template() {
-    const header = new HeaderView();
     return (
       `<section class="main main--result">
-        ${header.template}
+        ${this.header.template}
         <h2 class="title">${this.result.title}</h2>
         <div class="main-stat">${this.result.stat}</div> 
         ${this.result.comparison ? `<span class="main-comparison">${this.result.comparison}</span>` : ``}

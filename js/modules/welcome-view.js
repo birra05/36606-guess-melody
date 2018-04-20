@@ -2,11 +2,15 @@ import AbstractView from '../abstract-view';
 import HeaderView from '../components/header-view';
 
 export default class WelcomeView extends AbstractView {
+  constructor() {
+    super();
+    this.header = new HeaderView();
+  }
+
   get template() {
-    const header = new HeaderView();
     return (
       `<section class="main main--welcome">
-        ${header.template}
+        ${this.header.template}
         <button class="main-play">Начать игру</button>
         <h2 class="title main-title">Правила игры</h2>
         <p class="text main-text">

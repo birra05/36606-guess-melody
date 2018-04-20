@@ -2,27 +2,16 @@
 import {saveResult, showNextLevel} from '../utils';
 import GenreLevelView from './genre-level-view';
 
-export default (state, audioArray) => {
-  const genreLevel = new GenreLevelView(state, audioArray);
-  const form = genreLevel.element.querySelector(`.genre`);
-  const answers = Array.from(form.elements.answer);
-  const sendButton = form.querySelector(`.genre-answer-send`);
-  sendButton.disabled = true;
-
+export default (state, audioFiles) => {
+  const genreLevel = new GenreLevelView(state, audioFiles);
   const userAnswers = [];
 
   genreLevel.getAnswers = (event) => {
-    sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
     userAnswers.push(event.target.value);
   };
 
   genreLevel.showLevel = () => {
-    event.preventDefault();
-    saveResult(state, userAnswers, [audioArray.rightAnswer]);
-    answers.forEach((element) => {
-      element.checked = false;
-    });
-    sendButton.disabled = true;
+    saveResult(state, userAnswers, [audioFiles.rightAnswer]);
     showNextLevel(state);
   };
 
