@@ -13,7 +13,7 @@ export default () => {
   };
   const welcome = new WelcomeView();
 
-  welcome.startGame = () => {
+  welcome.onStartBtnClick = () => {
     state.level++;
     showTemplate(artistLevel(state, questions.artistQuestions[0]));
   };

@@ -22,12 +22,12 @@ export default class WelcomeView extends AbstractView {
     );
   }
 
-  startGame() {}
+  onStartBtnClick() {}
 
   bind() {
     const button = this.element.querySelector(`.main-play`);
     button.addEventListener(`click`, () => {
-      this.startGame();
+      this.onStartBtnClick();
     });
   }
 }

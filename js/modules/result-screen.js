@@ -43,7 +43,7 @@ export default (state) => {
   const result = getResult(state);
   const resultPage = new ResultView(result);
 
-  resultPage.replay = () => {
+  resultPage.onReplayBtnClick = () => {
     showTemplate(welcome());
   };
 

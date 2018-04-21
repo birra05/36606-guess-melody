@@ -4,13 +4,13 @@ import LivesView from '../components/lives-view';
 import PlayerView from '../components/player-view';
 
 export default class ArtistLevelView extends AbstractView {
-  constructor(state, audioFiles) {
+  constructor(state, questions) {
     super();
     this.state = state;
-    this.audioFiles = audioFiles;
+    this.questions = questions;
     this.timer = new TimerView(this.state);
     this.lives = new LivesView(this.state);
-    this.player = new PlayerView(this.audioFiles.song);
+    this.player = new PlayerView(this.questions.song);
   }
 
   get template() {
@@ -23,7 +23,7 @@ export default class ArtistLevelView extends AbstractView {
           <h2 class="title main-title">Кто исполняет эту песню?</h2>
           ${this.player.template}
           <form class="main-list">
-            ${this.audioFiles.questions.map((audio, i) => {
+            ${this.questions.answers.map((audio, i) => {
         const index = i + 1;
         return (
           `<div class="main-answer-wrapper">
@@ -42,14 +42,14 @@ export default class ArtistLevelView extends AbstractView {
     );
   }
 
-  getAnswersAndShowLevel() {}
+  onElementClick() {}
 
   bind() {
     const form = this.element.querySelector(`.main-list`);
 
     form.addEventListener(`change`, (event) => {
       event.target.checked = false;
-      this.getAnswersAndShowLevel(event);
+      this.onElementClick(event);
     });
   }
 }

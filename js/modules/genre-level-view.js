@@ -4,10 +4,10 @@ import LivesView from '../components/lives-view';
 import PlayerView from '../components/player-view';
 
 export default class GenreLevelView extends AbstractView {
-  constructor(state, audioFiles) {
+  constructor(state, questions) {
     super();
     this.state = state;
-    this.audioFiles = audioFiles;
+    this.questions = questions;
     this.timer = new TimerView(this.state);
     this.lives = new LivesView(this.state);
   }
@@ -19,9 +19,9 @@ export default class GenreLevelView extends AbstractView {
         ${this.lives.template}
     
         <div class="main-wrap">
-          <h2 class="title">Выберите ${this.audioFiles.genre} треки</h2>
+          <h2 class="title">Выберите ${this.questions.genre} треки</h2>
           <form class="genre">
-            ${this.audioFiles.questions.map((audio, i) => {
+            ${this.questions.answers.map((audio, i) => {
         const index = i + 1;
         const player = new PlayerView(audio.src);
         return (
@@ -39,8 +39,8 @@ export default class GenreLevelView extends AbstractView {
     );
   }
 
-  getAnswers() {}
-  showLevel() {}
+  onElementClick() {}
+  onSubmit() {}
 
   bind() {
     const form = this.element.querySelector(`.genre`);
@@ -50,7 +50,7 @@ export default class GenreLevelView extends AbstractView {
 
     form.addEventListener(`change`, (event) => {
       sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
-      this.getAnswers(event);
+      this.onElementClick(event.target.value);
     });
 
     form.addEventListener(`submit`, (event) => {
@@ -59,7 +59,7 @@ export default class GenreLevelView extends AbstractView {
         element.checked = false;
       });
       sendButton.disabled = true;
-      this.showLevel();
+      this.onSubmit();
     });
   }
 }

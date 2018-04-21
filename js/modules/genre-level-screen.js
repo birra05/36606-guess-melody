@@ -2,16 +2,16 @@
 import {saveResult, showNextLevel} from '../utils';
 import GenreLevelView from './genre-level-view';
 
-export default (state, audioFiles) => {
-  const genreLevel = new GenreLevelView(state, audioFiles);
+export default (state, questions) => {
+  const genreLevel = new GenreLevelView(state, questions);
   const userAnswers = [];
 
-  genreLevel.getAnswers = (event) => {
-    userAnswers.push(event.target.value);
+  genreLevel.onElementClick = (value) => {
+    userAnswers.push(value);
   };
 
-  genreLevel.showLevel = () => {
-    saveResult(state, userAnswers, [audioFiles.rightAnswer]);
+  genreLevel.onSubmit = () => {
+    saveResult(state, userAnswers, [questions.rightAnswer]);
     showNextLevel(state);
   };
 

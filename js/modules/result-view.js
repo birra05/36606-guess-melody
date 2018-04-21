@@ -19,13 +19,13 @@ export default class ResultView extends AbstractView {
     );
   }
 
-  replay() {}
+  onReplayBtnClick() {}
 
   bind() {
     const replayButton = this.element.querySelector(`.main-replay`);
 
     replayButton.addEventListener(`click`, () => {
-      this.replay();
+      this.onReplayBtnClick();
     });
   }
 }

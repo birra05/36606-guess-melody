@@ -2,13 +2,13 @@
 import {showNextLevel, saveResult} from '../utils';
 import ArtistLevelView from './artist-level-view';
 
-export default (state, audioFiles) => {
-  const artistLevel = new ArtistLevelView(state, audioFiles);
+export default (state, questions) => {
+  const artistLevel = new ArtistLevelView(state, questions);
   const userAnswers = [];
 
-  artistLevel.getAnswersAndShowLevel = (event) => {
+  artistLevel.onElementClick = (event) => {
     userAnswers.push(event.target.value);
-    saveResult(state, userAnswers, [audioFiles.rightAnswer]);
+    saveResult(state, userAnswers, [questions.rightAnswer]);
     showNextLevel(state);
   };
 
