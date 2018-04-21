@@ -1,7 +1,6 @@
-import {
-  getElementFromTemplate, showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
-import welcome from './welcome';
-import header from './header';
+import {showTemplate, playersStats, countPoints, showResult, InitialState} from '../utils';
+import welcome from './welcome-screen';
+import ResultView from './result-view';
 
 const getResult = (state) => {
   let result;
@@ -42,22 +41,13 @@ const getResult = (state) => {
 
 export default (state) => {
   const result = getResult(state);
-  const template = `<section class="main main--result">
-    ${header}
-    <h2 class="title">${result.title}</h2>
-    <div class="main-stat">${result.stat}</div> 
-    ${result.comparison ? `<span class="main-comparison">${result.comparison}</span>` : ``}
-    <span role="button" tabindex="0" class="main-replay">${result.button}</span>
-  </section>`;
+  const resultPage = new ResultView(result);
 
-  const page = getElementFromTemplate(template);
-  const replayButton = page.querySelector(`.main-replay`);
-
-  replayButton.addEventListener(`click`, () => {
+  resultPage.onReplayBtnClick = () => {
     showTemplate(welcome());
-  });
+  };
 
-  return page;
+  return resultPage.element;
 };
 
 

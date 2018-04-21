@@ -1,6 +1,6 @@
-import artistLevel from './modules/artist-level';
-import genreLevel from './modules/genre-level';
-import resultTemplate from './modules/result-template';
+import artistLevel from './modules/artist-level-screen';
+import genreLevel from './modules/genre-level-screen';
+import resultTemplate from './modules/result-screen';
 import questions from './data/questions-data';
 
 export const InitialState = {
@@ -97,9 +97,6 @@ export const countPoints = (answers = [], lives) => {
 };
 
 export const showResult = (stats = [], result) => {
-  // if (stats.length < 1 || typeof result !== `object`) {
-  //   throw new Error(`Ожидается массив данных других игроков и объект результата текущего игрока`);
-  // }
   if (result.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }

@@ -19,12 +19,12 @@ const getQuestions = (data) => {
     artistQuestions.push({
       rightAnswer: currentObject.artist,
       song: currentObject.src,
-      questions: getRandomArray(ItemsLength.ARTIST, data)
+      answers: getRandomArray(ItemsLength.ARTIST, data)
     });
     genreQuestions.push({
       rightAnswer: currentObject.name,
       genre: currentObject.genre,
-      questions: getRandomArray(ItemsLength.GENRE, data)
+      answers: getRandomArray(ItemsLength.GENRE, data)
     });
   }
 
