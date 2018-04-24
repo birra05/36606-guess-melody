@@ -12,18 +12,18 @@ export default class GameScreen {
 
   startGame() {
     this.model.nextLevel();
-    this.showNextLevel();
+    this._showNextLevel();
   }
 
-  compareArrays(arr1, arr2) {
+  _compareArrays(arr1, arr2) {
     if (arr1.length === arr2.length) {
       return arr1.every((element) => arr2.includes(element));
     }
     return false;
   }
 
-  saveResult(userAnswers, rightAnswers) {
-    const rightAnswer = this.compareArrays(userAnswers, rightAnswers);
+  _saveResult(userAnswers, rightAnswers) {
+    const rightAnswer = this._compareArrays(userAnswers, rightAnswers);
 
     if (rightAnswer) {
       this.model.saveAnswers({
@@ -41,7 +41,7 @@ export default class GameScreen {
     this.model.reduceTime();
   }
 
-  getNextLevel() {
+  _getNextLevel() {
     let view;
     this.questionObject = this.data[this.state.level - 1];
     switch (this.questionObject.type) {
@@ -58,12 +58,12 @@ export default class GameScreen {
   }
 
   _handleSubmit(...values) {
-    this.saveResult(values, [this.questionObject.rightAnswer]);
-    this.showNextLevel();
+    this._saveResult(values, [this.questionObject.rightAnswer]);
+    this._showNextLevel();
   }
 
-  showNextLevel() {
-    const nextLevel = this.getNextLevel();
+  _showNextLevel() {
+    const nextLevel = this._getNextLevel();
     if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
       showTemplate(nextLevel);
     } else {
