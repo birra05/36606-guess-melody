@@ -39,8 +39,7 @@ export default class GenreLevelView extends AbstractView {
     );
   }
 
-  onElementClick() {}
-  onSubmit(answers) {}
+  onSubmit() {}
 
   bind() {
     const form = this.element.querySelector(`.genre`);
@@ -60,7 +59,7 @@ export default class GenreLevelView extends AbstractView {
         element.checked = false;
       });
       sendButton.disabled = true;
-      this.onSubmit(userAnswers);
+      this.onSubmit(...userAnswers);
     });
   }
 }

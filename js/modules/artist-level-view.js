@@ -42,14 +42,14 @@ export default class ArtistLevelView extends AbstractView {
     );
   }
 
-  onElementClick() {}
+  onSubmit() {}
 
   bind() {
     const form = this.element.querySelector(`.main-list`);
 
     form.addEventListener(`change`, (event) => {
       event.target.checked = false;
-      this.onElementClick(event.target.value);
+      this.onSubmit(event.target.value);
     });
   }
 }

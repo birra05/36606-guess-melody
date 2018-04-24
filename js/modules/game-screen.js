@@ -8,12 +8,11 @@ export default class GameScreen {
     this.model = model;
     this.state = this.model.state;
     this.data = this.model.data;
-    this.userAnswers = [];
   }
 
   startGame() {
     this.model.nextLevel();
-    this.showNextLevel(this.state);
+    this.showNextLevel();
   }
 
   compareArrays(arr1, arr2) {
@@ -23,7 +22,7 @@ export default class GameScreen {
     return false;
   }
 
-  saveResult(state, userAnswers, rightAnswers) {
+  saveResult(userAnswers, rightAnswers) {
     const rightAnswer = this.compareArrays(userAnswers, rightAnswers);
 
     if (rightAnswer) {
@@ -42,33 +41,30 @@ export default class GameScreen {
     this.model.reduceTime();
   }
 
-  getNextLevel(state) {
-    let nextLevel;
-    const questionObject = this.data[state.level - 1];
-    switch (questionObject.type) {
+  getNextLevel() {
+    let view;
+    this.questionObject = this.data[this.state.level - 1];
+    switch (this.questionObject.type) {
       case `artist`:
-        const artistLevel = new ArtistLevelView(state, questionObject);
-        nextLevel = artistLevel.element;
-        artistLevel.onElementClick = (value) => {
-          this.userAnswers.push(value);
-          this.saveResult(state, this.userAnswers, [questionObject.rightAnswer]);
-          this.showNextLevel(state);
-        };
+        view = new ArtistLevelView(this.state, this.questionObject);
         break;
       case `genre`:
-        const genreLevel = new GenreLevelView(state, questionObject);
-        nextLevel = genreLevel.element;
-        genreLevel.onSubmit = (answers) => {
-          this.saveResult(state, answers, [questionObject.rightAnswer]);
-          this.showNextLevel(state);
-        };
+        view = new GenreLevelView(this.state, this.questionObject);
+        break;
     }
+    const nextLevel = view.element;
+    view.onSubmit = this._handleSubmit.bind(this);
     return nextLevel;
   }
 
-  showNextLevel(state) {
-    const nextLevel = this.getNextLevel(state);
-    if (state.answers.length < 10 && state.lives > 0 && state.time > 0) {
+  _handleSubmit(...values) {
+    this.saveResult(values, [this.questionObject.rightAnswer]);
+    this.showNextLevel();
+  }
+
+  showNextLevel() {
+    const nextLevel = this.getNextLevel();
+    if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
       showTemplate(nextLevel);
     } else {
       Application.showResult(this.model);
