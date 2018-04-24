@@ -49,7 +49,7 @@ export default class ArtistLevelView extends AbstractView {
 
     form.addEventListener(`change`, (event) => {
       event.target.checked = false;
-      this.onElementClick(event);
+      this.onElementClick(event.target.value);
     });
   }
 }

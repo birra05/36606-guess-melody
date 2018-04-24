@@ -49,8 +49,8 @@ export default class GameScreen {
       case `artist`:
         const artistLevel = new ArtistLevelView(state, questionObject);
         nextLevel = artistLevel.element;
-        artistLevel.onElementClick = (event) => {
-          this.userAnswers.push(event.target.value);
+        artistLevel.onElementClick = (value) => {
+          this.userAnswers.push(value);
           this.saveResult(state, this.userAnswers, [questionObject.rightAnswer]);
           this.showNextLevel(state);
         };
@@ -58,11 +58,8 @@ export default class GameScreen {
       case `genre`:
         const genreLevel = new GenreLevelView(state, questionObject);
         nextLevel = genreLevel.element;
-        genreLevel.onElementClick = (value) => {
-          this.userAnswers.push(value);
-        };
-        genreLevel.onSubmit = () => {
-          this.saveResult(state, this.userAnswers, [questionObject.rightAnswer]);
+        genreLevel.onSubmit = (answers) => {
+          this.saveResult(state, answers, [questionObject.rightAnswer]);
           this.showNextLevel(state);
         };
     }
