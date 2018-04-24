@@ -4,10 +4,10 @@ import LivesView from '../components/lives-view';
 import PlayerView from '../components/player-view';
 
 export default class GenreLevelView extends AbstractView {
-  constructor(state, questions) {
+  constructor(state, questionObject) {
     super();
     this.state = state;
-    this.questions = questions;
+    this.questions = questionObject;
     this.timer = new TimerView(this.state);
     this.lives = new LivesView(this.state);
   }

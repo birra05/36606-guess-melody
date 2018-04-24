@@ -1,6 +1,6 @@
-import {showTemplate} from './utils';
-import welcome from './modules/welcome-screen';
+// import welcome from './modules/welcome-screen-old';
+import Application from './application';
 
-showTemplate(welcome());
+Application.showWelcome();
 
 
