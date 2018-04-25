@@ -11,26 +11,27 @@ const ItemsLength = {
 };
 
 const getQuestions = (data) => {
-  const artistQuestions = [];
-  const genreQuestions = [];
+  const questions = [];
 
   for (let i = 0, l = data.length; i < l - 1; i++) {
     const currentObject = data[i];
-    artistQuestions.push({
+    questions.push({
+      type: `artist`,
       rightAnswer: currentObject.artist,
       song: currentObject.src,
       answers: getRandomArray(ItemsLength.ARTIST, data)
     });
-    genreQuestions.push({
+    questions.push({
+      type: `genre`,
       rightAnswer: currentObject.name,
       genre: currentObject.genre,
       answers: getRandomArray(ItemsLength.GENRE, data)
     });
   }
 
-  return {artistQuestions, genreQuestions};
+  return questions;
 };
 
-const questions = getQuestions(audioData);
+const questions = getQuestions(audioData).slice().sort(() => Math.random() - 0.5);
 
 export default questions;

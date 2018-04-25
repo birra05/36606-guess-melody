@@ -4,10 +4,10 @@ import LivesView from '../components/lives-view';
 import PlayerView from '../components/player-view';
 
 export default class GenreLevelView extends AbstractView {
-  constructor(state, questions) {
+  constructor(state, questionObject) {
     super();
     this.state = state;
-    this.questions = questions;
+    this.questions = questionObject;
     this.timer = new TimerView(this.state);
     this.lives = new LivesView(this.state);
   }
@@ -39,7 +39,6 @@ export default class GenreLevelView extends AbstractView {
     );
   }
 
-  onElementClick() {}
   onSubmit() {}
 
   bind() {
@@ -48,18 +47,19 @@ export default class GenreLevelView extends AbstractView {
     const sendButton = form.querySelector(`.genre-answer-send`);
     sendButton.disabled = true;
 
-    form.addEventListener(`change`, (event) => {
+    form.addEventListener(`change`, () => {
       sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
-      this.onElementClick(event.target.value);
     });
 
     form.addEventListener(`submit`, (event) => {
       event.preventDefault();
+      const checkedCheckboxes = answers.filter((checkbox) => checkbox.checked);
+      const userAnswers = checkedCheckboxes.map((checkbox) => checkbox.value);
       answers.forEach((element) => {
         element.checked = false;
       });
       sendButton.disabled = true;
-      this.onSubmit();
+      this.onSubmit(...userAnswers);
     });
   }
 }

@@ -1,22 +1,32 @@
-// Welcome
-import {showTemplate, InitialState} from '../utils';
-import artistLevel from './artist-level-screen';
-import questions from '../data/questions-data';
-import WelcomeView from './welcome-view';
+import AbstractView from '../abstract-view';
+import HeaderView from '../components/header-view';
+import Application from '../application';
 
-export default () => {
-  const state = {
-    level: 0,
-    lives: InitialState.LIVES,
-    time: InitialState.TIME,
-    answers: []
-  };
-  const welcome = new WelcomeView();
+export default class WelcomeScreen extends AbstractView {
+  constructor() {
+    super();
+    this.header = new HeaderView();
+  }
 
-  welcome.onStartBtnClick = () => {
-    state.level++;
-    showTemplate(artistLevel(state, questions.artistQuestions[0]));
-  };
-  return welcome.element;
-};
+  get template() {
+    return (
+      `<section class="main main--welcome">
+        ${this.header.template}
+        <button class="main-play">Начать игру</button>
+        <h2 class="title main-title">Правила игры</h2>
+        <p class="text main-text">
+          Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.<br>
+          Ошибиться можно 3 раза.<br>
+          Удачи!
+        </p>
+      </section>`
+    );
+  }
 
+  bind() {
+    const button = this.element.querySelector(`.main-play`);
+    button.addEventListener(`click`, () => {
+      Application.showGame();
+    });
+  }
+}
