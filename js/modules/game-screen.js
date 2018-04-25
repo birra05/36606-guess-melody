@@ -1,7 +1,7 @@
-import {showTemplate} from "../utils";
+import {showTemplate} from '../utils';
 import ArtistLevelView from './artist-level-view';
 import GenreLevelView from './genre-level-view';
-import Application from "../application";
+import Application from '../application';
 
 export default class GameScreen {
   constructor(model) {
@@ -15,15 +15,15 @@ export default class GameScreen {
     this._showNextLevel();
   }
 
-  _compareArrays(arr1, arr2) {
-    if (arr1.length === arr2.length) {
-      return arr1.every((element) => arr2.includes(element));
+  _compareAnswers(userAnswers, rightAnswers) {
+    if (userAnswers.length === rightAnswers.length) {
+      return userAnswers.every((element) => rightAnswers.includes(element));
     }
     return false;
   }
 
   _saveResult(userAnswers, rightAnswers) {
-    const rightAnswer = this._compareArrays(userAnswers, rightAnswers);
+    const rightAnswer = this._compareAnswers(userAnswers, rightAnswers);
 
     if (rightAnswer) {
       this.model.saveAnswers({

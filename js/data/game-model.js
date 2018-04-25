@@ -39,4 +39,8 @@ export default class GameModel {
   saveAnswers(value) {
     this._state.answers.push(value);
   }
+
+  savePoints(points) {
+    this._state.points = points;
+  }
 }

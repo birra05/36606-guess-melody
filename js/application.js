@@ -2,7 +2,7 @@ import {showTemplate} from './utils';
 import WelcomeScreen from './modules/welcome-screen';
 import GameModel from './data/game-model';
 import GameScreen from './modules/game-screen';
-import ResultScreen from "./modules/result-screen";
+import ResultScreen from './modules/result-screen';
 
 export default class Application {
   static showWelcome() {

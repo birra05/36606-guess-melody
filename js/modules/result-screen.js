@@ -2,15 +2,21 @@ import {InitialState, playersStats} from '../utils';
 import ResultView from './result-view';
 import Application from '../application';
 
+const FAST_TIME = 30;
+const Rules = {
+  IS_CORRECT: 1,
+  IS_FAST: 1,
+  IS_FAIL: -2
+};
+
 export default class ResultScreen {
   constructor(model) {
-    this.model = model;
-    this.state = this.model.state;
+    this.state = model.state;
     this.playersStats = playersStats;
   }
 
   get element() {
-    const result = this.getResult(this.state);
+    const result = this._getResult();
     this.view = new ResultView(result);
     this.view.onReplayBtnClick = () => {
       Application.showGame();
@@ -18,14 +24,7 @@ export default class ResultScreen {
     return this.view.element;
   }
 
-  countPoints(answers = [], lives) {
-    const FAST_TIME = 30;
-    const Rules = {
-      IS_CORRECT: 1,
-      IS_FAST: 1,
-      IS_FAIL: -2
-    };
-
+  _countPoints(answers = [], lives) {
     if (answers.length !== 10) {
       throw new Error(`Массив ответов должен содержать 10 элементов`);
     }
@@ -48,35 +47,35 @@ export default class ResultScreen {
     return points;
   }
 
-  getResult(state) {
+  _getResult() {
     let result;
-    const resultString = this.showResult(this.playersStats, state);
+    const resultString = this._showResult(this.playersStats, this.state);
     switch (true) {
-      case state.lives === 0:
+      case this.state.lives === 0:
         result = {
           title: `Какая жалость!`,
           stat: resultString,
           button: `Сыграть ещё раз`
         };
         break;
-      case state.time === 0:
+      case this.state.time === 0:
         result = {
           title: `Увы и ах!`,
           stat: resultString,
           button: `Попробовать ещё раз`
         };
         break;
-      case state.answers.length === 10:
+      case this.state.answers.length === 10:
         const ONE_MINUTE = 60;
-        const minutes = Math.floor(state.time / ONE_MINUTE);
-        const seconds = state.time % 60;
-        const points = this.countPoints(state.answers, state.lives);
-        state.points = points;
+        const minutes = Math.floor(this.state.time / ONE_MINUTE);
+        const seconds = this.state.time % 60;
+        const points = this._countPoints(this.state.answers, this.state.lives);
+        this.state.savePoints(points);
         this.playersStats.push(points);
         result = {
           title: `Вы настоящий меломан!`,
           stat: `За ${minutes} минуты ${seconds} секунд вы набрали 
-      ${points}, совершив ${InitialState.LIVES - state.lives} ошибки`,
+      ${points}, совершив ${InitialState.LIVES - this.state.lives} ошибки`,
           comparison: resultString,
           button: `Сыграть ещё раз`
         };
@@ -85,7 +84,7 @@ export default class ResultScreen {
     return result;
   }
 
-  showResult(stats = [], result) {
+  _showResult(stats = [], result) {
     if (result.lives === 0) {
       return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
     }
