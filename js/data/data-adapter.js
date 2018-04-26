@@ -9,7 +9,7 @@ export const adaptServerData = (data) => {
   for (let element of data) {
     switch (element.type) {
       case `genre`:
-        element.rightAnswer = element.answers.find((answersElement) => answersElement.genre === element.genre).genre;
+        element.rightAnswer = element.genre;
         break;
       case `artist`:
         element.rightAnswer = element.answers.find((answersElement) => answersElement.isCorrect).title;

@@ -11,6 +11,7 @@ const Rules = {
 
 export default class ResultScreen {
   constructor(model) {
+    this.model = model;
     this.state = model.state;
     this.playersStats = playersStats;
   }
@@ -70,7 +71,7 @@ export default class ResultScreen {
         const minutes = Math.floor(this.state.time / ONE_MINUTE);
         const seconds = this.state.time % 60;
         const points = this._countPoints(this.state.answers, this.state.lives);
-        this.state.savePoints(points);
+        this.model.savePoints(points);
         this.playersStats.push(points);
         result = {
           title: `Вы настоящий меломан!`,
