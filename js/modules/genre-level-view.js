@@ -19,7 +19,7 @@ export default class GenreLevelView extends AbstractView {
         ${this.lives.template}
     
         <div class="main-wrap">
-          <h2 class="title">Выберите ${this.questions.genre} треки</h2>
+          <h2 class="title">${this.questions.question}</h2>
           <form class="genre">
             ${this.questions.answers.map((audio, i) => {
         const index = i + 1;
@@ -27,7 +27,7 @@ export default class GenreLevelView extends AbstractView {
         return (
           `<div class="genre-answer">
               ${player.template}
-              <input type="checkbox" name="answer" value="${audio.name}" id="a-${index}">
+              <input type="checkbox" name="answer" value="${audio.genre}" id="a-${index}">
               <label class="genre-answer-check" for="a-${index}"></label>
             </div>`
         );

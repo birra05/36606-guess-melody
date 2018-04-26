@@ -1,18 +1,13 @@
 import {InitialState} from '../utils';
-import questions from './questions-data';
 
 export default class GameModel {
-  constructor() {
+  constructor(data) {
     this.restart();
-    this.questions = questions;
+    this.data = data;
   }
 
   get state() {
     return this._state;
-  }
-
-  get data() {
-    return this.questions;
   }
 
   restart() {

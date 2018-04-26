@@ -20,7 +20,7 @@ export default class ArtistLevelView extends AbstractView {
         ${this.lives.template}
     
         <div class="main-wrap">
-          <h2 class="title main-title">Кто исполняет эту песню?</h2>
+          <h2 class="title main-title">${this.questions.question}</h2>
           ${this.player.template}
           <form class="main-list">
             ${this.questions.answers.map((audio, i) => {
