@@ -63,8 +63,8 @@ export default class GameScreen {
   }
 
   _showNextLevel() {
-    const nextLevel = this._getNextLevel();
     if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
+      const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
     } else {
       Application.showResult(this.model);
