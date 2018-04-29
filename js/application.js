@@ -6,10 +6,11 @@ import ResultScreen from './modules/result-screen';
 import {adaptServerData} from './data/data-adapter';
 
 let questionsData;
+const getDataURL = `https://es.dump.academy/guess-melody/questions`;
 
 export default class Application {
   static start() {
-    window.fetch(`https://es.dump.academy/guess-melody/questions`).
+    window.fetch(getDataURL).
         then((response) => response.json()).
         then((data) => adaptServerData(data)).
         then(Application.showWelcome);

@@ -8,7 +8,7 @@ export default class ArtistLevelView extends AbstractView {
     super();
     this.state = state;
     this.questions = questionObject;
-    this.timer = new TimerView(this.state);
+    this.timer = new TimerView(this.state.time);
     this.lives = new LivesView(this.state);
     this.player = new PlayerView(this.questions.src);
   }

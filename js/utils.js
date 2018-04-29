@@ -3,8 +3,6 @@ export const InitialState = {
   TIME: 300
 };
 
-export const playersStats = [];
-
 export const getElementFromTemplate = (template) => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;

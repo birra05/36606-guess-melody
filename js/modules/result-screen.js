@@ -1,4 +1,4 @@
-import {InitialState, playersStats} from '../utils';
+import {InitialState} from '../utils';
 import ResultView from './result-view';
 import Application from '../application';
 
@@ -8,6 +8,7 @@ const Rules = {
   IS_FAST: 1,
   IS_FAIL: -2
 };
+const playersStats = [];
 
 export default class ResultScreen {
   constructor(model) {

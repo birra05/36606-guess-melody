@@ -2,17 +2,35 @@ import {showTemplate} from '../utils';
 import ArtistLevelView from './artist-level-view';
 import GenreLevelView from './genre-level-view';
 import Application from '../application';
+import TimerView from '../components/timer-view';
 
 export default class GameScreen {
   constructor(model) {
     this.model = model;
     this.state = this.model.state;
     this.data = this.model.data;
+    this.timerId = null;
+    this.timer = new TimerView(this.state);
+    this.levelsTime = [];
+  }
+
+  stopTimer() {
+    clearInterval(this.timerId);
+    this.timerId = null;
+    Application.showResult(this.model);
   }
 
   startGame() {
     this.model.nextLevel();
     this._showNextLevel();
+    this.timerId = setInterval(() => {
+      this.model.tick();
+      if (this.state.time > 0) {
+        this.timer.update(this.state.time);
+      } else {
+        this.stopTimer();
+      }
+    }, 1000);
   }
 
   _compareAnswers(userAnswers, rightAnswers) {
@@ -24,21 +42,21 @@ export default class GameScreen {
 
   _saveResult(userAnswers, rightAnswers) {
     const rightAnswer = this._compareAnswers(userAnswers, rightAnswers);
+    const answerTime = this.levelsTime[this.levelsTime.length - 1] - this.state.time;
 
     if (rightAnswer) {
       this.model.saveAnswers({
         isCorrect: true,
-        time: 20
+        time: answerTime
       });
     } else {
       this.model.saveAnswers({
         isCorrect: false,
-        time: 20
+        time: answerTime
       });
       this.model.reduceLives();
     }
     this.model.nextLevel();
-    this.model.reduceTime();
   }
 
   _getNextLevel() {
@@ -63,10 +81,12 @@ export default class GameScreen {
   }
 
   _showNextLevel() {
+    this.levelsTime.push(this.state.time);
     if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
       const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
     } else {
+      this.stopTimer();
       Application.showResult(this.model);
     }
   }

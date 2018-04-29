@@ -1,4 +1,5 @@
 import {InitialState} from '../utils';
+// import Timer from '../components/timer';
 
 export default class GameModel {
   constructor(data) {
@@ -8,6 +9,10 @@ export default class GameModel {
 
   get state() {
     return this._state;
+  }
+
+  tick() {
+    this._state.time--;
   }
 
   restart() {
@@ -25,10 +30,6 @@ export default class GameModel {
 
   reduceLives() {
     this._state.lives--;
-  }
-
-  reduceTime() {
-    this._state.time -= this._state.answers[this._state.answers.length - 1].time;
   }
 
   saveAnswers(value) {
