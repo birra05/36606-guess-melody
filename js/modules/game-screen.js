@@ -2,33 +2,30 @@ import {showTemplate} from '../utils';
 import ArtistLevelView from './artist-level-view';
 import GenreLevelView from './genre-level-view';
 import Application from '../application';
-import TimerView from '../components/timer-view';
 
 export default class GameScreen {
   constructor(model) {
     this.model = model;
     this.state = this.model.state;
     this.data = this.model.data;
-    this.timerId = null;
-    this.timer = new TimerView(this.state);
+    this.interval = null;
     this.levelsTime = [];
   }
 
-  stopTimer() {
-    clearInterval(this.timerId);
-    this.timerId = null;
+  _stopTimer() {
+    clearInterval(this.interval);
+    this.interval = null;
     Application.showResult(this.model);
   }
 
   startGame() {
     this.model.nextLevel();
     this._showNextLevel();
-    this.timerId = setInterval(() => {
-      this.model.tick();
+    this.interval = setInterval(() => {
       if (this.state.time > 0) {
-        this.timer.update(this.state.time);
+        this.model.tick();
       } else {
-        this.stopTimer();
+        this._stopTimer();
       }
     }, 1000);
   }
@@ -86,8 +83,7 @@ export default class GameScreen {
       const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
     } else {
-      this.stopTimer();
-      Application.showResult(this.model);
+      this._stopTimer();
     }
   }
 }

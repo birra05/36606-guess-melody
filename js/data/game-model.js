@@ -1,10 +1,11 @@
 import {InitialState} from '../utils';
-// import Timer from '../components/timer';
+import TimerView from '../components/timer-view';
 
 export default class GameModel {
   constructor(data) {
     this.restart();
     this.data = data;
+    this.timer = new TimerView(this.state.time);
   }
 
   get state() {
@@ -13,6 +14,7 @@ export default class GameModel {
 
   tick() {
     this._state.time--;
+    this.timer.update(this._state.time);
   }
 
   restart() {
@@ -38,5 +40,9 @@ export default class GameModel {
 
   savePoints(points) {
     this._state.points = points;
+  }
+
+  saveResultTime(time) {
+    this._state.resultTime = InitialState.TIME - time;
   }
 }

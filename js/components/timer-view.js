@@ -1,6 +1,7 @@
 import AbstractView from '../abstract-view';
 
 const ONE_MINUTE = 60;
+const LAST_SECONDS = 30;
 
 const formatTime = (value) => {
   return value.length === 1 ? `0` + value : value;
@@ -39,6 +40,9 @@ export default class TimerView extends AbstractView {
     const secondsValue = timerValue.querySelector(`.timer-value-secs`);
     const minutes = String(Math.floor(time / ONE_MINUTE));
     const seconds = String(time % ONE_MINUTE);
+    if (time < LAST_SECONDS) {
+      timerValue.classList.add(`timer-value--finished`);
+    }
     minutesValue.textContent = formatTime(minutes);
     secondsValue.textContent = formatTime(seconds);
   }
