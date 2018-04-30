@@ -1,19 +1,12 @@
-import {InitialState, playersStats} from '../utils';
+import {InitialState} from '../utils';
 import ResultView from './result-view';
 import Application from '../application';
-
-const FAST_TIME = 30;
-const Rules = {
-  IS_CORRECT: 1,
-  IS_FAST: 1,
-  IS_FAIL: -2
-};
 
 export default class ResultScreen {
   constructor(model) {
     this.model = model;
     this.state = model.state;
-    this.playersStats = playersStats;
+    this.playersStats = [];
   }
 
   get element() {
@@ -26,6 +19,13 @@ export default class ResultScreen {
   }
 
   _countPoints(answers = [], lives) {
+    const FAST_TIME = 30;
+    const Rules = {
+      IS_CORRECT: 1,
+      IS_FAST: 1,
+      IS_FAIL: -2
+    };
+
     if (answers.length !== 10) {
       throw new Error(`Массив ответов должен содержать 10 элементов`);
     }
@@ -48,6 +48,10 @@ export default class ResultScreen {
     return points;
   }
 
+  setPlayersStats(data) {
+    this.playersStats = data.map((element) => element.points);
+  }
+
   _getResult() {
     let result;
     const resultString = this._showResult(this.playersStats, this.state);
@@ -68,14 +72,14 @@ export default class ResultScreen {
         break;
       case this.state.answers.length === 10:
         const ONE_MINUTE = 60;
-        const minutes = Math.floor(this.state.time / ONE_MINUTE);
-        const seconds = this.state.time % 60;
         const points = this._countPoints(this.state.answers, this.state.lives);
         this.model.savePoints(points);
-        this.playersStats.push(points);
+        this.model.saveResultTime(this.state.time);
+        const minutes = Math.floor(this.state.resultTime / ONE_MINUTE);
+        const seconds = this.state.resultTime % 60;
         result = {
           title: `Вы настоящий меломан!`,
-          stat: `За ${minutes} минуты ${seconds} секунд вы набрали 
+          stat: `За ${minutes === 0 ? `` : `${minutes} минуты`} ${seconds} секунд вы набрали 
       ${points}, совершив ${InitialState.LIVES - this.state.lives} ошибки`,
           comparison: resultString,
           button: `Сыграть ещё раз`

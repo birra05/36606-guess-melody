@@ -3,15 +3,13 @@ import WelcomeScreen from './modules/welcome-screen';
 import GameModel from './data/game-model';
 import GameScreen from './modules/game-screen';
 import ResultScreen from './modules/result-screen';
-import {adaptServerData} from './data/data-adapter';
+import Loader from './loader';
 
 let questionsData;
 
 export default class Application {
   static start() {
-    window.fetch(`https://es.dump.academy/guess-melody/questions`).
-        then((response) => response.json()).
-        then((data) => adaptServerData(data)).
+    Loader.loadData().
         then(Application.showWelcome);
   }
 
@@ -30,5 +28,13 @@ export default class Application {
   static showResult(model) {
     const resultScreen = new ResultScreen(model);
     showTemplate(resultScreen.element);
+    if (typeof model.state.points !== `undefined`) {
+      Loader.saveResults(model.state).
+          then(() => Loader.loadResults()).
+          then((data) => {
+            resultScreen.setPlayersStats(data);
+            showTemplate(resultScreen.element);
+          });
+    }
   }
 }

@@ -1,13 +1,20 @@
 import {InitialState} from '../utils';
+import TimerView from '../components/timer-view';
 
 export default class GameModel {
   constructor(data) {
     this.restart();
     this.data = data;
+    this.timer = new TimerView(this.state.time);
   }
 
   get state() {
     return this._state;
+  }
+
+  tick() {
+    this._state.time--;
+    this.timer.update(this._state.time);
   }
 
   restart() {
@@ -27,15 +34,15 @@ export default class GameModel {
     this._state.lives--;
   }
 
-  reduceTime() {
-    this._state.time -= this._state.answers[this._state.answers.length - 1].time;
-  }
-
   saveAnswers(value) {
     this._state.answers.push(value);
   }
 
   savePoints(points) {
     this._state.points = points;
+  }
+
+  saveResultTime(time) {
+    this._state.resultTime = InitialState.TIME - time;
   }
 }

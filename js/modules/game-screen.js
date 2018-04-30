@@ -8,11 +8,26 @@ export default class GameScreen {
     this.model = model;
     this.state = this.model.state;
     this.data = this.model.data;
+    this.interval = null;
+    this.levelsTime = [];
+  }
+
+  _stopTimer() {
+    clearInterval(this.interval);
+    this.interval = null;
+    Application.showResult(this.model);
   }
 
   startGame() {
     this.model.nextLevel();
     this._showNextLevel();
+    this.interval = setInterval(() => {
+      if (this.state.time > 0) {
+        this.model.tick();
+      } else {
+        this._stopTimer();
+      }
+    }, 1000);
   }
 
   _compareAnswers(userAnswers, rightAnswers) {
@@ -24,21 +39,21 @@ export default class GameScreen {
 
   _saveResult(userAnswers, rightAnswers) {
     const rightAnswer = this._compareAnswers(userAnswers, rightAnswers);
+    const answerTime = this.levelsTime[this.levelsTime.length - 1] - this.state.time;
 
     if (rightAnswer) {
       this.model.saveAnswers({
         isCorrect: true,
-        time: 20
+        time: answerTime
       });
     } else {
       this.model.saveAnswers({
         isCorrect: false,
-        time: 20
+        time: answerTime
       });
       this.model.reduceLives();
     }
     this.model.nextLevel();
-    this.model.reduceTime();
   }
 
   _getNextLevel() {
@@ -63,11 +78,12 @@ export default class GameScreen {
   }
 
   _showNextLevel() {
+    this.levelsTime.push(this.state.time);
     if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
       const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
     } else {
-      Application.showResult(this.model);
+      this._stopTimer();
     }
   }
 }
