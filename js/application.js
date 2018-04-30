@@ -28,11 +28,11 @@ export default class Application {
   static showResult(model) {
     const resultScreen = new ResultScreen(model);
     showTemplate(resultScreen.element);
-    if (typeof model.state.points === `number`) {
+    if (typeof model.state.points !== `undefined`) {
       Loader.saveResults(model.state).
           then(() => Loader.loadResults()).
           then((data) => {
-            resultScreen.getPlayersStats(data);
+            resultScreen.setPlayersStats(data);
             showTemplate(resultScreen.element);
           });
     }

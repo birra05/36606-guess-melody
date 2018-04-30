@@ -2,12 +2,11 @@ import {InitialState} from '../utils';
 import ResultView from './result-view';
 import Application from '../application';
 
-let playersStats;
-
 export default class ResultScreen {
   constructor(model) {
     this.model = model;
     this.state = model.state;
+    this.playersStats = [];
   }
 
   get element() {
@@ -49,13 +48,13 @@ export default class ResultScreen {
     return points;
   }
 
-  getPlayersStats(data) {
-    playersStats = data.map((element) => element.points);
+  setPlayersStats(data) {
+    this.playersStats = data.map((element) => element.points);
   }
 
   _getResult() {
     let result;
-    const resultString = this._showResult(playersStats, this.state);
+    const resultString = this._showResult(this.playersStats, this.state);
     switch (true) {
       case this.state.lives === 0:
         result = {

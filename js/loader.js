@@ -16,11 +16,16 @@ const toJSON = (result) => result.json();
 
 export default class Loader {
   static loadData() {
-    return fetch(`${SERVER_URL}/questions`).then(checkStatus).then(toJSON).then(adaptServerData);
+    return fetch(`${SERVER_URL}/questions`).
+        then(checkStatus).
+        then(toJSON).
+        then(adaptServerData);
   }
 
   static loadResults() {
-    return fetch(`${SERVER_URL}/stats/${APP_ID}`).then(checkStatus).then(toJSON);
+    return fetch(`${SERVER_URL}/stats/${APP_ID}`).
+        then(checkStatus).
+        then(toJSON);
   }
 
   static saveResults(data) {
@@ -31,6 +36,7 @@ export default class Loader {
       },
       method: `POST`
     };
-    return fetch(`${SERVER_URL}/stats/${APP_ID}`, requestSettings).then(checkStatus);
+    return fetch(`${SERVER_URL}/stats/${APP_ID}`, requestSettings).
+        then(checkStatus);
   }
 }
