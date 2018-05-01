@@ -53,14 +53,18 @@ export default class GenreLevelView extends AbstractView {
     const sendButton = form.querySelector(`.genre-answer-send`);
     sendButton.disabled = true;
 
+    const players = Array.from(this.element.querySelectorAll(`.player`));
     const playBtns = Array.from(this.element.querySelectorAll(`.player-control`));
 
-    playBtns.forEach((element) => {
-      element.addEventListener(`click`, (event) => {
+    players.forEach((player) => {
+      const button = player.querySelector(`.player-control`);
+
+      button.addEventListener(`click`, (event) => {
         event.preventDefault();
 
         const currentPlayBtn = event.currentTarget;
-        const currentSong = currentPlayBtn.previousElementSibling;
+        const currentSong = player.querySelector(`.player audio`);
+
         if (currentSong.paused) {
           playBtns.forEach((control) => {
             const song = control.previousElementSibling;
