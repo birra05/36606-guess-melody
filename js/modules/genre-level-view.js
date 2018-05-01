@@ -1,7 +1,6 @@
 import AbstractView from '../abstract-view';
 import TimerView from '../components/timer-view';
 import LivesView from '../components/lives-view';
-import PlayerView from '../components/player-view';
 
 export default class GenreLevelView extends AbstractView {
   constructor(state, questionObject) {
@@ -23,10 +22,17 @@ export default class GenreLevelView extends AbstractView {
           <form class="genre">
             ${this.questions.answers.map((audio, i) => {
         const index = i + 1;
-        const player = new PlayerView(audio.src);
         return (
           `<div class="genre-answer">
-              ${player.template}
+              <div class="player-wrapper">
+                <div class="player">
+                  <audio src=${audio.src}></audio>
+                  <button class="player-control" type="button"></button>
+                  <div class="player-track">
+                    <span class="player-status"></span>
+                  </div>
+                </div>
+              </div>
               <input type="checkbox" name="answer" value="${audio.genre}" id="a-${index}">
               <label class="genre-answer-check" for="a-${index}"></label>
             </div>`
