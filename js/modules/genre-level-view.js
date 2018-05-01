@@ -47,6 +47,32 @@ export default class GenreLevelView extends AbstractView {
     const sendButton = form.querySelector(`.genre-answer-send`);
     sendButton.disabled = true;
 
+    const playBtns = Array.from(this.element.querySelectorAll(`.player-control`));
+
+    playBtns.forEach((element) => {
+      element.addEventListener(`click`, (event) => {
+        event.preventDefault();
+
+        const currentPlayBtn = event.currentTarget;
+        const currentSong = currentPlayBtn.previousElementSibling;
+        if (currentSong.paused) {
+          playBtns.forEach((control) => {
+            const song = control.previousElementSibling;
+            if (control === currentPlayBtn) {
+              control.classList.add(`player-control--pause`);
+              song.play();
+            } else {
+              control.classList.remove(`player-control--pause`);
+              song.pause();
+            }
+          });
+        } else {
+          currentPlayBtn.classList.remove(`player-control--pause`);
+          currentSong.pause();
+        }
+      });
+    });
+
     form.addEventListener(`change`, () => {
       sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
     });

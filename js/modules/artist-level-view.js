@@ -46,6 +46,19 @@ export default class ArtistLevelView extends AbstractView {
 
   bind() {
     const form = this.element.querySelector(`.main-list`);
+    const playBtn = this.element.querySelector(`.player-control`);
+    const song = this.element.querySelector(`audio`);
+
+    playBtn.addEventListener(`click`, (event) => {
+      event.preventDefault();
+      playBtn.classList.toggle(`player-control--pause`);
+
+      if (playBtn.classList.contains(`player-control--pause`)) {
+        song.play();
+      } else {
+        song.pause();
+      }
+    });
 
     form.addEventListener(`change`, (event) => {
       event.target.checked = false;
