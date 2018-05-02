@@ -53,18 +53,14 @@ export default class GenreLevelView extends AbstractView {
     const sendButton = form.querySelector(`.genre-answer-send`);
     sendButton.disabled = true;
 
-    const players = Array.from(this.element.querySelectorAll(`.player`));
-    const playBtns = Array.from(this.element.querySelectorAll(`.player-control`));
+    const playBtns = Array.from(form.querySelectorAll(`.player-control`));
 
-    players.forEach((player) => {
-      const button = player.querySelector(`.player-control`);
-
-      button.addEventListener(`click`, (event) => {
-        event.preventDefault();
-
-        const currentPlayBtn = event.currentTarget;
-        const currentSong = player.querySelector(`.player audio`);
-
+    form.addEventListener(`click`, (event) => {
+      event.preventDefault();
+      if (event.target.classList.contains(`player-control`)) {
+        const currentPlayer = event.target.parentNode;
+        const currentPlayBtn = event.target;
+        const currentSong = currentPlayer.querySelector(`audio`);
         if (currentSong.paused) {
           playBtns.forEach((control) => {
             const song = control.previousElementSibling;
@@ -80,8 +76,35 @@ export default class GenreLevelView extends AbstractView {
           currentPlayBtn.classList.remove(`player-control--pause`);
           currentSong.pause();
         }
-      });
+      }
     });
+
+    // players.forEach((player) => {
+    //   const button = player.querySelector(`.player-control`);
+    //
+    //   button.addEventListener(`click`, (event) => {
+    //     event.preventDefault();
+    //
+    //     const currentPlayBtn = event.currentTarget;
+    //     const currentSong = player.querySelector(`.player audio`);
+    //
+    //     if (currentSong.paused) {
+    //       playBtns.forEach((control) => {
+    //         const song = control.previousElementSibling;
+    //         if (control === currentPlayBtn) {
+    //           control.classList.add(`player-control--pause`);
+    //           song.play();
+    //         } else {
+    //           control.classList.remove(`player-control--pause`);
+    //           song.pause();
+    //         }
+    //       });
+    //     } else {
+    //       currentPlayBtn.classList.remove(`player-control--pause`);
+    //       currentSong.pause();
+    //     }
+    //   });
+    // });
 
     form.addEventListener(`change`, () => {
       sendButton.disabled = !answers.some((checkbox) => checkbox.checked);
