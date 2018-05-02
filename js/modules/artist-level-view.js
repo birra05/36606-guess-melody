@@ -1,7 +1,6 @@
 import AbstractView from '../abstract-view';
 import TimerView from '../components/timer-view';
 import LivesView from '../components/lives-view';
-import PlayerView from '../components/player-view';
 
 export default class ArtistLevelView extends AbstractView {
   constructor(state, questionObject) {
@@ -10,7 +9,6 @@ export default class ArtistLevelView extends AbstractView {
     this.questions = questionObject;
     this.timer = new TimerView(this.state.time);
     this.lives = new LivesView(this.state);
-    this.player = new PlayerView(this.questions.src);
   }
 
   get template() {
@@ -21,7 +19,15 @@ export default class ArtistLevelView extends AbstractView {
     
         <div class="main-wrap">
           <h2 class="title main-title">${this.questions.question}</h2>
-          ${this.player.template}
+          <div class="player-wrapper">
+            <div class="player">
+              <audio src=${this.questions.src}></audio>
+              <button class="player-control" type="button"></button>
+              <div class="player-track">
+                <span class="player-status"></span>
+              </div>
+            </div>
+          </div>
           <form class="main-list">
             ${this.questions.answers.map((audio, i) => {
         const index = i + 1;
@@ -46,6 +52,19 @@ export default class ArtistLevelView extends AbstractView {
 
   bind() {
     const form = this.element.querySelector(`.main-list`);
+    const playBtn = this.element.querySelector(`.player-control`);
+    const song = this.element.querySelector(`audio`);
+
+    playBtn.addEventListener(`click`, (event) => {
+      event.preventDefault();
+      const isPlay = playBtn.classList.toggle(`player-control--pause`);
+
+      if (isPlay) {
+        song.play();
+      } else {
+        song.pause();
+      }
+    });
 
     form.addEventListener(`change`, (event) => {
       event.target.checked = false;

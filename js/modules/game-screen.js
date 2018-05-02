@@ -8,20 +8,20 @@ export default class GameScreen {
     this.model = model;
     this.state = this.model.state;
     this.data = this.model.data;
-    this.interval = null;
-    this.levelsTime = [];
+    this._interval = null;
+    this._levelsTime = [];
   }
 
   _stopTimer() {
-    clearInterval(this.interval);
-    this.interval = null;
+    clearInterval(this._interval);
+    this._interval = null;
     Application.showResult(this.model);
   }
 
   startGame() {
     this.model.nextLevel();
     this._showNextLevel();
-    this.interval = setInterval(() => {
+    this._interval = setInterval(() => {
       if (this.state.time > 0) {
         this.model.tick();
       } else {
@@ -39,7 +39,7 @@ export default class GameScreen {
 
   _saveResult(userAnswers, rightAnswers) {
     const rightAnswer = this._compareAnswers(userAnswers, rightAnswers);
-    const answerTime = this.levelsTime[this.levelsTime.length - 1] - this.state.time;
+    const answerTime = this._levelsTime[this._levelsTime.length - 1] - this.state.time;
 
     if (rightAnswer) {
       this.model.saveAnswers({
@@ -53,7 +53,9 @@ export default class GameScreen {
       });
       this.model.reduceLives();
     }
-    this.model.nextLevel();
+    if (this.state.level < 10) {
+      this.model.nextLevel();
+    }
   }
 
   _getNextLevel() {
@@ -78,7 +80,7 @@ export default class GameScreen {
   }
 
   _showNextLevel() {
-    this.levelsTime.push(this.state.time);
+    this._levelsTime.push(this.state.time);
     if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
       const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
