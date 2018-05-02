@@ -57,25 +57,26 @@ export default class GenreLevelView extends AbstractView {
 
     form.addEventListener(`click`, (event) => {
       const target = event.target;
-      if (target.classList.contains(`player-control`)) {
-        const currentPlayer = target.parentNode;
-        const currentSong = currentPlayer.querySelector(`audio`);
-        if (currentSong.paused) {
-          players.forEach((element) => {
-            const control = element.querySelector(`.player-control`);
-            const song = element.querySelector(`audio`);
-            if (control === target) {
-              control.classList.add(`player-control--pause`);
-              song.play();
-            } else {
-              control.classList.remove(`player-control--pause`);
-              song.pause();
-            }
-          });
-        } else {
-          target.classList.remove(`player-control--pause`);
-          currentSong.pause();
-        }
+      if (!target.classList.contains(`player-control`)) {
+        return;
+      }
+      const currentPlayer = target.closest(`.player`);
+      const currentSong = currentPlayer.querySelector(`audio`);
+      if (currentSong.paused) {
+        players.forEach((element) => {
+          const control = element.querySelector(`.player-control`);
+          const song = element.querySelector(`audio`);
+          if (control === target) {
+            control.classList.add(`player-control--pause`);
+            song.play();
+          } else {
+            control.classList.remove(`player-control--pause`);
+            song.pause();
+          }
+        });
+      } else {
+        target.classList.remove(`player-control--pause`);
+        currentSong.pause();
       }
     });
 
