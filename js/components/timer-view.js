@@ -25,25 +25,25 @@ export default class TimerView extends AbstractView {
           class="timer-line"
           style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center">  
         </circle>
-        <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-          <span class="timer-value-mins">${this.formattedMinutes}</span><!--
-          --><span class="timer-value-dots">:</span><!--
-          --><span class="timer-value-secs">${this.formattedSeconds}</span>
-        </div>
-      </svg>`
+      </svg>
+      <div class="time-counter" xmlns="http://www.w3.org/1999/xhtml">
+           <span class="time-counter-mins">${this.formattedMinutes}</span><!--
+        --><span class="time-counter-dots">:</span><!--
+        --><span class="time-counter-secs">${this.formattedSeconds}</span>
+      </div>`
     );
   }
 
-  update(time) {
-    const timerValue = document.querySelector(`.timer-value`);
-    const minutesValue = timerValue.querySelector(`.timer-value-mins`);
-    const secondsValue = timerValue.querySelector(`.timer-value-secs`);
+  static update(time) {
+    const timerValue = document.querySelector(`.time-counter`);
+    const minutesValue = timerValue.querySelector(`.time-counter-mins`);
+    const secondsValue = timerValue.querySelector(`.time-counter-secs`);
     const minutes = String(Math.floor(time / ONE_MINUTE));
     const seconds = String(time % ONE_MINUTE);
     if (time < LAST_SECONDS) {
-      timerValue.classList.add(`timer-value--finished`);
+      timerValue.classList.add(`time-counter--finished`);
     }
-    minutesValue.textContent = formatTime(minutes);
-    secondsValue.textContent = formatTime(seconds);
+    minutesValue.innerHTML = formatTime(minutes);
+    secondsValue.innerHTML = formatTime(seconds);
   }
 }

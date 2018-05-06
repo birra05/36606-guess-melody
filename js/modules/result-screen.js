@@ -1,4 +1,4 @@
-import {InitialState} from '../utils';
+import {InitialState, LEVELS_NUMBER} from '../utils';
 import ResultView from './result-view';
 import Application from '../application';
 
@@ -26,11 +26,11 @@ export default class ResultScreen {
       IS_FAIL: -2
     };
 
-    if (answers.length !== 10) {
-      throw new Error(`Массив ответов должен содержать 10 элементов`);
+    if (answers.length !== LEVELS_NUMBER) {
+      throw new Error(`Массив ответов должен содержать ${LEVELS_NUMBER} элементов`);
     }
 
-    if (!Number.isInteger(lives) || lives <= 0 || lives > 3) {
+    if (!Number.isInteger(lives) || lives <= 0 || lives > InitialState.LIVES) {
       throw new Error(`Передано неверное количество жизней`);
     }
 
@@ -54,7 +54,7 @@ export default class ResultScreen {
 
   _getResult() {
     let result;
-    const resultString = this._showResult(this.playersStats, this.state);
+    const resultString = ResultScreen.showResult(this.playersStats, this.state);
     switch (true) {
       case this.state.lives === 0:
         result = {
@@ -70,13 +70,13 @@ export default class ResultScreen {
           button: `Попробовать ещё раз`
         };
         break;
-      case this.state.answers.length === 10:
+      case this.state.answers.length === LEVELS_NUMBER:
         const ONE_MINUTE = 60;
         const points = this._countPoints(this.state.answers, this.state.lives);
         this.model.savePoints(points);
         this.model.saveResultTime(this.state.time);
         const minutes = Math.floor(this.state.resultTime / ONE_MINUTE);
-        const seconds = this.state.resultTime % 60;
+        const seconds = this.state.resultTime % ONE_MINUTE;
         result = {
           title: `Вы настоящий меломан!`,
           stat: `За ${minutes === 0 ? `` : `${minutes} минуты`} ${seconds} секунд вы набрали 
@@ -89,13 +89,15 @@ export default class ResultScreen {
     return result;
   }
 
-  _showResult(stats = [], result) {
+  static showResult(stats = [], result) {
     if (result.lives === 0) {
       return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
     }
+
     if (result.time === 0) {
       return `Время вышло! Вы не успели отгадать все мелодии`;
     }
+
     const otherPlayersStats = stats.slice();
     otherPlayersStats.push(result.points);
     const compareResults = (a, b) => b - a;

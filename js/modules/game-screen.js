@@ -1,4 +1,4 @@
-import {showTemplate} from '../utils';
+import {showTemplate, LEVELS_NUMBER} from '../utils';
 import ArtistLevelView from './artist-level-view';
 import GenreLevelView from './genre-level-view';
 import Application from '../application';
@@ -53,7 +53,7 @@ export default class GameScreen {
       });
       this.model.reduceLives();
     }
-    if (this.state.level < 10) {
+    if (this.state.level < LEVELS_NUMBER) {
       this.model.nextLevel();
     }
   }
@@ -81,7 +81,7 @@ export default class GameScreen {
 
   _showNextLevel() {
     this._levelsTime.push(this.state.time);
-    if (this.state.answers.length < 10 && this.state.lives > 0 && this.state.time > 0) {
+    if (this.state.answers.length < LEVELS_NUMBER && this.state.lives > 0 && this.state.time > 0) {
       const nextLevel = this._getNextLevel();
       showTemplate(nextLevel);
     } else {

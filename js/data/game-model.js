@@ -5,7 +5,6 @@ export default class GameModel {
   constructor(data) {
     this.restart();
     this.data = data;
-    this.timer = new TimerView(this.state.time);
   }
 
   get state() {
@@ -14,7 +13,7 @@ export default class GameModel {
 
   tick() {
     this._state.time--;
-    this.timer.update(this._state.time);
+    TimerView.update(this._state.time);
   }
 
   restart() {

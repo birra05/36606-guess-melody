@@ -1,7 +1,9 @@
 export const InitialState = {
   LIVES: 3,
-  TIME: 300
+  TIME: 300,
 };
+
+export const LEVELS_NUMBER = 10;
 
 export const getElementFromTemplate = (template) => {
   const outer = document.createElement(`div`);

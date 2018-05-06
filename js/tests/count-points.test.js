@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {InitialState} from '../utils';
+import {InitialState, LEVELS_NUMBER} from '../utils';
 import {
   notEnoughAnswers, correctNotFastAnswers, someFailAnswers,
   correctAndFastAnswers, threeFailAnswers
@@ -12,7 +12,7 @@ describe(`Count gamer's points`, () => {
   const resultScreen = new ResultScreen(model);
 
   it(`should not allow set incorrect number of answers`, () => {
-    assert.throws(() => resultScreen._countPoints(), `Массив ответов должен содержать 10 элементов`);
+    assert.throws(() => resultScreen._countPoints(), `Массив ответов должен содержать ${LEVELS_NUMBER} элементов`);
     assert.throws(() => resultScreen._countPoints(notEnoughAnswers, InitialState.LIVES), `Массив ответов должен содержать 10 элементов`);
   });
   it(`should not allow set wrong number of lives`, () => {
